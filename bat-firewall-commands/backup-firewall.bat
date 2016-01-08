@@ -1,0 +1,1 @@
+netsh advfirewall export "C:\backup-firewall.wfw"	

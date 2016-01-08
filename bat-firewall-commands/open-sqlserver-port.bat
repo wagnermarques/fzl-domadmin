@@ -1,0 +1,1 @@
+ netsh advfirewall firewall add rule name="Open SQL Server Port 1433" dir=in action=allow protocol=TCP localport=1433 
