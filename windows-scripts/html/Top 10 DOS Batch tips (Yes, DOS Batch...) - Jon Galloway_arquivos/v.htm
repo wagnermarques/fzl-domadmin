@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>No connection could be made because the target machine actively refused it 127.0.0.1:27017</title>
+        <meta name="viewport" content="width=device-width" />
+        <style>
+         body {font-family:"Verdana";font-weight:normal;font-size: .7em;color:black;} 
+         p {font-family:"Verdana";font-weight:normal;color:black;margin-top: -5px}
+         b {font-family:"Verdana";font-weight:bold;color:black;margin-top: -5px}
+         H1 { font-family:"Verdana";font-weight:normal;font-size:18pt;color:red }
+         H2 { font-family:"Verdana";font-weight:normal;font-size:14pt;color:maroon }
+         pre {font-family:"Consolas","Lucida Console",Monospace;font-size:11pt;margin:0;padding:0.5em;line-height:14pt}
+         .marker {font-weight: bold; color: black;text-decoration: none;}
+         .version {color: gray;}
+         .error {margin-bottom: 10px;}
+         .expandable { text-decoration:underline; font-weight:bold; color:navy; cursor:hand; }
+         @media screen and (max-width: 639px) {
+          pre { width: 440px; overflow: auto; white-space: pre-wrap; word-wrap: break-word; }
+         }
+         @media screen and (max-width: 479px) {
+          pre { width: 280px; }
+         }
+        </style>
+    </head>
+
+    <body bgcolor="white">
+
+            <span><H1>Server Error in '/' Application.<hr width=100% size=1 color=silver></H1>
+
+            <h2> <i>No connection could be made because the target machine actively refused it 127.0.0.1:27017</i> </h2></span>
+
+            <font face="Arial, Helvetica, Geneva, SunSans-Regular, sans-serif ">
+
+            <b> Description: </b>An unhandled exception occurred during the execution of the current web request. Please review the stack trace for more information about the error and where it originated in the code.
+
+            <br><br>
+
+            <b> Exception Details: </b>System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 127.0.0.1:27017<br><br>
+
+            <b>Source Error:</b> <br><br>
+
+            <table width=100% bgcolor="#ffffcc">
+               <tr>
+                  <td>
+                      <code>
+
+An unhandled exception was generated during the execution of the current web request. Information regarding the origin and location of the exception can be identified using the exception stack trace below.</code>
+
+                  </td>
+               </tr>
+            </table>
+
+            <br>
+
+            <b>Stack Trace:</b> <br><br>
+
+            <table width=100% bgcolor="#ffffcc">
+               <tr>
+                  <td>
+                      <code><pre>
+
+[SocketException (0x274d): No connection could be made because the target machine actively refused it 127.0.0.1:27017]
+   System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress) +208
+   System.Net.Sockets.Socket.Connect(EndPoint remoteEP) +120
+   System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP) +70
+   MongoDB.Driver.Internal.MongoConnection.Open() +158
+   MongoDB.Driver.Internal.MongoConnection.SendMessage(MongoRequestMessage message, WriteConcern writeConcern, String databaseName) +1095
+   MongoDB.Driver.Internal.MongoConnection.RunCommand(String databaseName, QueryFlags queryFlags, CommandDocument command, Boolean throwOnError) +249
+   MongoDB.Driver.MongoServerInstance.Ping(MongoConnection connection) +306
+   MongoDB.Driver.MongoServerInstance.Connect() +372
+   MongoDB.Driver.Internal.DirectMongoServerProxy.Connect(TimeSpan timeout, ReadPreference readPreference) +232
+
+[MongoConnectionException: Unable to connect to server localhost:27017: No connection could be made because the target machine actively refused it 127.0.0.1:27017.]
+   MongoDB.Driver.Internal.DirectMongoServerProxy.Connect(TimeSpan timeout, ReadPreference readPreference) +791
+   MongoDB.Driver.Internal.DirectMongoServerProxy.ChooseServerInstance(ReadPreference readPreference) +101
+   MongoDB.Driver.MongoServer.AcquireConnection(MongoDatabase database, ReadPreference readPreference) +241
+   MongoDB.Driver.MongoCollection.InsertBatch(Type nominalType, IEnumerable documents, MongoInsertOptions options) +73
+   MongoDB.Driver.MongoCollection.Insert(Type nominalType, Object document, MongoInsertOptions options) +60
+   MongoDB.Driver.MongoCollection.Insert(TNominalType document, MongoInsertOptions options) +55
+   MongoDB.Driver.MongoCollection`1.Insert(TDefaultDocument document, MongoInsertOptions options) +57
+   MongoDB.Driver.MongoCollection.CreateIndex(IMongoIndexKeys keys, IMongoIndexOptions options) +228
+   MongoDB.Driver.MongoCollection.EnsureIndex(String[] keyNames) +187
+   MiradR.Library.Models.MaxMindMongoDb..cctor() +197
+
+[TypeInitializationException: The type initializer for &#39;MiradR.Library.Models.MaxMindMongoDb&#39; threw an exception.]
+   MiradR.Library.Models.MaxMindMongoDb..ctor() +0
+   MiradR.Modules.IndexModule..cctor() +87
+
+[TypeInitializationException: The type initializer for &#39;MiradR.Modules.IndexModule&#39; threw an exception.]
+   System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor) +0
+   System.Reflection.RuntimeConstructorInfo.Invoke(BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture) +339
+   Nancy.TinyIoc.TinyIoCContainer.ConstructType(Type requestedType, Type implementationType, ConstructorInfo constructor, NamedParameterOverloads parameters, ResolveOptions options) +632
+
+[TinyIoCResolutionException: Unable to resolve type: MiradR.Modules.IndexModule]
+   Nancy.TinyIoc.TinyIoCContainer.ConstructType(Type requestedType, Type implementationType, ConstructorInfo constructor, NamedParameterOverloads parameters, ResolveOptions options) +667
+   Nancy.TinyIoc.SingletonFactory.GetObject(Type requestedType, TinyIoCContainer container, NamedParameterOverloads parameters, ResolveOptions options) +123
+   Nancy.TinyIoc.TinyIoCContainer.ResolveInternal(TypeRegistration registration, NamedParameterOverloads parameters, ResolveOptions options) +85
+   Nancy.TinyIoc.TinyIoCContainer.&lt;ResolveAllInternal&gt;b__45(TypeRegistration registration) +16
+   System.Linq.WhereSelectEnumerableIterator`2.MoveNext() +145
+   System.Linq.&lt;CastIterator&gt;d__b1`1.MoveNext() +85
+   Nancy.Routing.RouteCache.BuildCache(IEnumerable`1 modules) +46
+   Nancy.Routing.RouteCache..ctor(INancyModuleCatalog moduleCatalog, IModuleKeyGenerator moduleKeyGenerator, INancyContextFactory contextFactory, IRouteSegmentExtractor routeSegmentExtractor, IRouteDescriptionProvider routeDescriptionProvider, ICultureService cultureService) +190
+
+[TargetInvocationException: Exception has been thrown by the target of an invocation.]
+   System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor) +0
+   System.Reflection.RuntimeConstructorInfo.Invoke(BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture) +190
+   Nancy.TinyIoc.TinyIoCContainer.ConstructType(Type requestedType, Type implementationType, ConstructorInfo constructor, NamedParameterOverloads parameters, ResolveOptions options) +632
+
+[TinyIoCResolutionException: Unable to resolve type: Nancy.Routing.RouteCache]
+   Nancy.TinyIoc.TinyIoCContainer.ConstructType(Type requestedType, Type implementationType, ConstructorInfo constructor, NamedParameterOverloads parameters, ResolveOptions options) +667
+   Nancy.TinyIoc.SingletonFactory.GetObject(Type requestedType, TinyIoCContainer container, NamedParameterOverloads parameters, ResolveOptions options) +123
+   Nancy.TinyIoc.TinyIoCContainer.ResolveInternal(TypeRegistration registration, NamedParameterOverloads parameters, ResolveOptions options) +85
+   Nancy.TinyIoc.TinyIoCContainer.ConstructType(Type requestedType, Type implementationType, ConstructorInfo constructor, NamedParameterOverloads parameters, ResolveOptions options) +386
+
+[TinyIoCResolutionException: Unable to resolve type: Nancy.Routing.DefaultRouteResolver]
+   Nancy.TinyIoc.TinyIoCContainer.ConstructType(Type requestedType, Type implementationType, ConstructorInfo constructor, NamedParameterOverloads parameters, ResolveOptions options) +507
+   Nancy.TinyIoc.SingletonFactory.GetObject(Type requestedType, TinyIoCContainer container, NamedParameterOverloads parameters, ResolveOptions options) +123
+   Nancy.TinyIoc.TinyIoCContainer.ResolveInternal(TypeRegistration registration, NamedParameterOverloads parameters, ResolveOptions options) +85
+   Nancy.TinyIoc.TinyIoCContainer.&lt;ResolveAllInternal&gt;b__45(TypeRegistration registration) +16
+   System.Linq.WhereSelectEnumerableIterator`2.MoveNext() +145
+   System.Linq.&lt;CastIterator&gt;d__b1`1.MoveNext() +172
+   Nancy.Diagnostics.DiagnosticsModuleCatalog.ConfigureContainer(IModuleKeyGenerator moduleKeyGenerator, IEnumerable`1 providers, IRootPathProvider rootPathProvider, IRequestTracing requestTracing, NancyInternalConfiguration configuration, DiagnosticsConfiguration diagnosticsConfiguration) +375
+   Nancy.Diagnostics.DiagnosticsHook.Enable(DiagnosticsConfiguration diagnosticsConfiguration, IPipelines pipelines, IEnumerable`1 providers, IRootPathProvider rootPathProvider, IEnumerable`1 serializers, IRequestTracing requestTracing, NancyInternalConfiguration configuration, IModelBinderLocator modelBinderLocator, IEnumerable`1 responseProcessors, ICultureService cultureService) +97
+   Nancy.Diagnostics.DefaultDiagnostics.Initialize(IPipelines pipelines) +38
+   Nancy.Bootstrapper.NancyBootstrapperBase`1.Initialise() +981
+   Nancy.Hosting.Aspnet.NancyHttpRequestHandler..cctor() +26
+
+[TypeInitializationException: The type initializer for &#39;Nancy.Hosting.Aspnet.NancyHttpRequestHandler&#39; threw an exception.]
+   Nancy.Hosting.Aspnet.NancyHttpRequestHandler..ctor() +0
+
+[TargetInvocationException: Exception has been thrown by the target of an invocation.]
+   System.RuntimeTypeHandle.CreateInstance(RuntimeType type, Boolean publicOnly, Boolean noCheck, Boolean&amp; canBeCached, RuntimeMethodHandleInternal&amp; ctor, Boolean&amp; bNeedSecurityCheck) +0
+   System.RuntimeType.CreateInstanceSlow(Boolean publicOnly, Boolean skipCheckThis, Boolean fillCache, StackCrawlMark&amp; stackMark) +113
+   System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean skipCheckThis, Boolean fillCache, StackCrawlMark&amp; stackMark) +232
+   System.Activator.CreateInstance(Type type, Boolean nonPublic) +83
+   System.RuntimeType.CreateInstanceImpl(BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture, Object[] activationAttributes, StackCrawlMark&amp; stackMark) +1136
+   System.Activator.CreateInstance(Type type, BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture, Object[] activationAttributes) +128
+   System.Activator.CreateInstance(Type type, BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture) +18
+   System.Web.HttpRuntime.CreateNonPublicInstance(Type type, Object[] args) +60
+   System.Web.Configuration.HandlerFactoryCache..ctor(String type) +46
+   System.Web.HttpApplication.GetFactory(String type) +86
+   System.Web.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute() +262
+   System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously) +155
+</pre></code>
+
+                  </td>
+               </tr>
+            </table>
+
+            <br>
+
+            <hr width=100% size=1 color=silver>
+
+            <b>Version Information:</b>&nbsp;Microsoft .NET Framework Version:4.0.30319; ASP.NET Version:4.0.30319.17929
+
+            </font>
+
+    </body>
+</html>
+<!-- 
+[SocketException]: No connection could be made because the target machine actively refused it 127.0.0.1:27017
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.Net.Sockets.TcpClient.Connect(IPEndPoint remoteEP)
+   at MongoDB.Driver.Internal.MongoConnection.Open()
+   at MongoDB.Driver.Internal.MongoConnection.SendMessage(MongoRequestMessage message, WriteConcern writeConcern, String databaseName)
+   at MongoDB.Driver.Internal.MongoConnection.RunCommand(String databaseName, QueryFlags queryFlags, CommandDocument command, Boolean throwOnError)
+   at MongoDB.Driver.MongoServerInstance.Ping(MongoConnection connection)
+   at MongoDB.Driver.MongoServerInstance.Connect()
+   at MongoDB.Driver.Internal.DirectMongoServerProxy.Connect(TimeSpan timeout, ReadPreference readPreference)
+[MongoConnectionException]: Unable to connect to server localhost:27017: No connection could be made because the target machine actively refused it 127.0.0.1:27017.
+   at MongoDB.Driver.Internal.DirectMongoServerProxy.Connect(TimeSpan timeout, ReadPreference readPreference)
+   at MongoDB.Driver.Internal.DirectMongoServerProxy.ChooseServerInstance(ReadPreference readPreference)
+   at MongoDB.Driver.MongoServer.AcquireConnection(MongoDatabase database, ReadPreference readPreference)
+   at MongoDB.Driver.MongoCollection.InsertBatch(Type nominalType, IEnumerable documents, MongoInsertOptions options)
+   at MongoDB.Driver.MongoCollection.Insert(Type nominalType, Object document, MongoInsertOptions options)
+   at MongoDB.Driver.MongoCollection.Insert[TNominalType](TNominalType document, MongoInsertOptions options)
+   at MongoDB.Driver.MongoCollection`1.Insert(TDefaultDocument document, MongoInsertOptions options)
+   at MongoDB.Driver.MongoCollection.CreateIndex(IMongoIndexKeys keys, IMongoIndexOptions options)
+   at MongoDB.Driver.MongoCollection.EnsureIndex(String[] keyNames)
+   at MiradR.Library.Models.MaxMindMongoDb..cctor()
+[TypeInitializationException]: The type initializer for &#39;MiradR.Library.Models.MaxMindMongoDb&#39; threw an exception.
+   at MiradR.Library.Models.MaxMindMongoDb..ctor()
+   at MiradR.Modules.IndexModule..cctor()
+[TypeInitializationException]: The type initializer for &#39;MiradR.Modules.IndexModule&#39; threw an exception.
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
+   at System.Reflection.RuntimeConstructorInfo.Invoke(BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Nancy.TinyIoc.TinyIoCContainer.ConstructType(Type requestedType, Type implementationType, ConstructorInfo constructor, NamedParameterOverloads parameters, ResolveOptions options)
+[TinyIoCResolutionException]: Unable to resolve type: MiradR.Modules.IndexModule
+   at Nancy.TinyIoc.TinyIoCContainer.ConstructType(Type requestedType, Type implementationType, ConstructorInfo constructor, NamedParameterOverloads parameters, ResolveOptions options)
+   at Nancy.TinyIoc.TinyIoCContainer.SingletonFactory.GetObject(Type requestedType, TinyIoCContainer container, NamedParameterOverloads parameters, ResolveOptions options)
+   at Nancy.TinyIoc.TinyIoCContainer.ResolveInternal(TypeRegistration registration, NamedParameterOverloads parameters, ResolveOptions options)
+   at Nancy.TinyIoc.TinyIoCContainer.<ResolveAllInternal>b__45(TypeRegistration registration)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.<CastIterator>d__b1`1.MoveNext()
+   at Nancy.Routing.RouteCache.BuildCache(IEnumerable`1 modules)
+   at Nancy.Routing.RouteCache..ctor(INancyModuleCatalog moduleCatalog, IModuleKeyGenerator moduleKeyGenerator, INancyContextFactory contextFactory, IRouteSegmentExtractor routeSegmentExtractor, IRouteDescriptionProvider routeDescriptionProvider, ICultureService cultureService)
+[TargetInvocationException]: Exception has been thrown by the target of an invocation.
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
+   at System.Reflection.RuntimeConstructorInfo.Invoke(BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Nancy.TinyIoc.TinyIoCContainer.ConstructType(Type requestedType, Type implementationType, ConstructorInfo constructor, NamedParameterOverloads parameters, ResolveOptions options)
+[TinyIoCResolutionException]: Unable to resolve type: Nancy.Routing.RouteCache
+   at Nancy.TinyIoc.TinyIoCContainer.ConstructType(Type requestedType, Type implementationType, ConstructorInfo constructor, NamedParameterOverloads parameters, ResolveOptions options)
+   at Nancy.TinyIoc.TinyIoCContainer.SingletonFactory.GetObject(Type requestedType, TinyIoCContainer container, NamedParameterOverloads parameters, ResolveOptions options)
+   at Nancy.TinyIoc.TinyIoCContainer.ResolveInternal(TypeRegistration registration, NamedParameterOverloads parameters, ResolveOptions options)
+   at Nancy.TinyIoc.TinyIoCContainer.ConstructType(Type requestedType, Type implementationType, ConstructorInfo constructor, NamedParameterOverloads parameters, ResolveOptions options)
+[TinyIoCResolutionException]: Unable to resolve type: Nancy.Routing.DefaultRouteResolver
+   at Nancy.TinyIoc.TinyIoCContainer.ConstructType(Type requestedType, Type implementationType, ConstructorInfo constructor, NamedParameterOverloads parameters, ResolveOptions options)
+   at Nancy.TinyIoc.TinyIoCContainer.SingletonFactory.GetObject(Type requestedType, TinyIoCContainer container, NamedParameterOverloads parameters, ResolveOptions options)
+   at Nancy.TinyIoc.TinyIoCContainer.ResolveInternal(TypeRegistration registration, NamedParameterOverloads parameters, ResolveOptions options)
+   at Nancy.TinyIoc.TinyIoCContainer.<ResolveAllInternal>b__45(TypeRegistration registration)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.<CastIterator>d__b1`1.MoveNext()
+   at Nancy.Diagnostics.DiagnosticsModuleCatalog.ConfigureContainer(IModuleKeyGenerator moduleKeyGenerator, IEnumerable`1 providers, IRootPathProvider rootPathProvider, IRequestTracing requestTracing, NancyInternalConfiguration configuration, DiagnosticsConfiguration diagnosticsConfiguration)
+   at Nancy.Diagnostics.DiagnosticsHook.Enable(DiagnosticsConfiguration diagnosticsConfiguration, IPipelines pipelines, IEnumerable`1 providers, IRootPathProvider rootPathProvider, IEnumerable`1 serializers, IRequestTracing requestTracing, NancyInternalConfiguration configuration, IModelBinderLocator modelBinderLocator, IEnumerable`1 responseProcessors, ICultureService cultureService)
+   at Nancy.Diagnostics.DefaultDiagnostics.Initialize(IPipelines pipelines)
+   at Nancy.Bootstrapper.NancyBootstrapperBase`1.Initialise()
+   at Nancy.Hosting.Aspnet.NancyHttpRequestHandler..cctor()
+[TypeInitializationException]: The type initializer for &#39;Nancy.Hosting.Aspnet.NancyHttpRequestHandler&#39; threw an exception.
+   at Nancy.Hosting.Aspnet.NancyHttpRequestHandler..ctor()
+[TargetInvocationException]: Exception has been thrown by the target of an invocation.
+   at System.RuntimeTypeHandle.CreateInstance(RuntimeType type, Boolean publicOnly, Boolean noCheck, Boolean& canBeCached, RuntimeMethodHandleInternal& ctor, Boolean& bNeedSecurityCheck)
+   at System.RuntimeType.CreateInstanceSlow(Boolean publicOnly, Boolean skipCheckThis, Boolean fillCache, StackCrawlMark& stackMark)
+   at System.RuntimeType.CreateInstanceDefaultCtor(Boolean publicOnly, Boolean skipCheckThis, Boolean fillCache, StackCrawlMark& stackMark)
+   at System.Activator.CreateInstance(Type type, Boolean nonPublic)
+   at System.RuntimeType.CreateInstanceImpl(BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture, Object[] activationAttributes, StackCrawlMark& stackMark)
+   at System.Activator.CreateInstance(Type type, BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture, Object[] activationAttributes)
+   at System.Activator.CreateInstance(Type type, BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture)
+   at System.Web.HttpRuntime.CreateNonPublicInstance(Type type, Object[] args)
+   at System.Web.Configuration.HandlerFactoryCache..ctor(String type)
+   at System.Web.HttpApplication.GetFactory(String type)
+   at System.Web.HttpApplication.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+--><!-- 
+This error page might contain sensitive information because ASP.NET is configured to show verbose error messages using &lt;customErrors mode="Off"/&gt;. Consider using &lt;customErrors mode="On"/&gt; or &lt;customErrors mode="RemoteOnly"/&gt; in production environments.-->
