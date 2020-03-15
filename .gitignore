@@ -6,3 +6,10 @@
 **/**/outputs
 **/**/credentials.sh
 windows-scripts
+**/**/*.zip*
+**/fonts-downloads
+**/**/*.mkv
+**/**/*.avi
+**/**/*.mp3
+**/**/*.mp4
+
