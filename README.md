@@ -1,2 +1,7 @@
 # domadmin
-domain admin scripts
+
+helper for common tasks in linux environments
+
+
+
+
