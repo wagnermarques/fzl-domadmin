@@ -1,31 +1,40 @@
 #!/bin/bash
 
+declare -A _defaults=(
+    ["javaJdkVersion"]="21" 
+    ["tomcatVersion"]="9")
+
 #DETECT THIS SCRIPT PATH
-FZL-DESKTOP_SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-export PATH=$PATH:$FZL-DESKTOP_SCRIPT_PATH
-
-# the soureced srcipts uses this previouse variables
-source setup-progsativos-scripts/ffmpeg.sh
-source setup-progsativos-scripts/DotEnv.sh
-source setup-progsativos-scripts/fzl-ambiente-dev-php-fpm-moodle-joomla.sh
-source setup-progsativos-scripts/screencast-scripts.sh
-source setup-progsativos-scripts/multimedia-scripts.sh
-source setup-progsativos-scripts/docker.sh
-source setup-progsativos-scripts/docker-containers.sh
-source setup-progsativos-scripts/dev-java.sh #
-source setup-progsativos-scripts/dev-ides.sh #
-source setup-progsativos-scripts/dev-ides-eclipse.sh #
-source setup-progsativos-scripts/dev-servers.sh #
-
-source setup-progsativos-scripts/dev-android.sh #
-source setup-progsativos-scripts/dev-nodejs.sh # 
+FZL_DESKTOP_SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROGSATIVOS_DIR="/media/wgn/d4ae1cfc-8228-4bec-a0cc-c6b7345e29bd/PROGSATIVOS"
 
 
-source setup-progsativos-scripts/bash-config.sh # 
-source setup-progsativos-scripts/convert-files.sh #
+export PATH=$PATH:$FZL_DESKTOP_SCRIPT_PATH
 
-source setup-progsativos-scripts/fzl-emacs.sh
+#array of files names to be sourced
+sources_files=(
+    dev-java.sh 
+    dev-javafx.sh
+    dev-ides.sh 
+    dev-ides-eclipse.sh
+    
+    ffmpeg.sh 
+    DotEnv.sh 
+    fzl-ambiente-dev-php-fpm-moodle-joomla.sh 
+    screencast-scripts.sh 
+    multimedia-scripts.sh 
+    docker.sh docker-containers.sh 
+    
+    dev-servers.sh dev-android.sh dev-nodejs.sh bash-config.sh convert-files.sh 
+     
+    fzl-emacs.sh)
+
+
+
+for file in ${sources_files[@]}; do
+    source $FZL_DESKTOP_SCRIPT_PATH/$file
+done
+
 
 function fzl-vscode-start--at-progsativos(){
     cd $PROGSATIVOS_DIR/VisualStudioCode-linux-x64/ && ./code &
@@ -46,17 +55,6 @@ function fzl-telegram-start(){
 function fzl-google-drive-start(){
     google-drive-ocamlfuse ~/GDrive/
 }
-
-function fzl-show-env-vars(){
-    echo "JAVA_HOME=$JAVA_HOME"
-    echo "GRADLE_HOME=$GRADLE_HOME"
-    echo "M2_HOME=$M2_HOME"
-    echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
-    echo "ANDROID_HOME=$ANDROID_HOME"
-    echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
-    echo "ZOTERO_HOME=$ZOTERO_HOME"
-}
-
 
 function fzl-ansible--setup-ansible-cfg(){    
     export ANSIBLE_CONFIG=$PROGSATIVOS_DIR/setup-progsativos-scripts/ansible.cfg
