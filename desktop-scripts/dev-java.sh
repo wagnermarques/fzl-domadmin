@@ -21,7 +21,7 @@ export -f fzl-java
 
 
 #JAVA JDK ON DESKTOP HOST
-_ORACLE_JAVA8_HOME=""
+_ORACLE_JAVA8_HOME="$PROGSATIVOS_DIR/java-jdks/jdk1.8.0_202/"
 _ORACLE_JAVA11_HOME=""
 _ORACLE_JAVA17_HOME="$PROGSATIVOS_DIR/java-jdks/jdk-17.0.3"
 _ORACLE_JAVA21_HOME="$PROGSATIVOS_DIR/java-jdks/jdk-21.0.1"
@@ -54,6 +54,12 @@ function fzl-java-setup--oracle-jdk-21(){
 }
 export -f fzl-java-setup--oracle-jdk-21
 
+
+function fzl-java-setup--oracle-jdk-8(){
+        export JAVA_HOME=$_ORACLE_JAVA8_HOME
+        export PATH=$JAVA_HOME/bin:$PATH
+}
+export -f fzl-java-setup--oracle-jdk-8
 
 
 function fzl-java-version-setup(){

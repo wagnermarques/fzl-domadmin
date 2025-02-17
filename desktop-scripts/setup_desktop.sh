@@ -18,6 +18,8 @@ sources_files=(
     dev-ides.sh 
     dev-ides-eclipse.sh
     
+    compare-files-and-dirs.sh
+    
     ffmpeg.sh 
     DotEnv.sh 
     fzl-ambiente-dev-php-fpm-moodle-joomla.sh 
