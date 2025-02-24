@@ -1,0 +1,12 @@
+#!/bin/bash
+#https://serverfault.com/questions/154650/find-printers-with-
+
+NETWORK_IP=$1
+NETOWRK_MASK=$2
+nmap -p 515,631,9100 -oG - $NETWORK_IP/$NETWORK_MASK \
+     | gawk '/open/{print $2}'  \
+     | xargs --delimiter='\n' nmap -sU -p 161 -oG -  \
+     | gawk '/open/{print $2}'  \
+     | xargs --replace=$ipaddress snmpget -v 1 -O v -c public
+     $ipaddress system.sysDescr.0 | \
+     sed 's/STRING:\s//'

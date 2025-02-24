@@ -1,0 +1,9 @@
+* dotEmacs
+
+This is a simples customization of emacs to editting files in this project
+
+In this project I edit some
+- shellscript files
+- ansible yml files
+- docker files
+- some python files

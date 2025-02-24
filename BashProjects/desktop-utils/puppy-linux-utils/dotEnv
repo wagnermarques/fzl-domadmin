@@ -1,0 +1,4 @@
+proxy_user=wagner
+proxy_pass=mt23-910
+proxy_host=192.168.0.2
+proxy_port=3128
