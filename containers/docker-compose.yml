@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.1
+    container_name: elasticsearch
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster      
+      - bootstrap.memory_lock=true # o so não toma de volta a memoria alocada na opcao JAVA_OPTS
+      - discovery.type=single-node # o elastic nao precisa gastar recursos para descobrir outros nós
+      - xpack.security.enabled=false # desabilita a seguranca (temporariamente nao e recomendado)
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m 
+    ulimits:
+      memlock:
+        soft: -1 # ilimitado
+        hard: -1 # ilimitado
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    ports:
+      - 9210:9200
+      - 9310:9300      
+
+volumes:
+  elasticsearch_data:
+
+#M-! docker-compose up -d --build
+    

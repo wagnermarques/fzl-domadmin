@@ -6,6 +6,12 @@
  VSCODE_EXTERNAL_DISK="$PROGSATIVOS_DIR/ides/VSCode-linux-x64/"
  VSCODE_HOST_DISK="/home/wgn/PROGSATIVOS/VSCode-linux-x64/"
 
+ function fzl-intellij-start(){
+     cd $PROGSATIVOS_DIR/Ides/intellij/idea-IU-243.24978.46/bin
+     ./idea.sh
+     cd -
+}
+export -f fzl-intellij-start
 
 function fzl-vscode-setup-chrome-sandbox(){
   if [ -d $VSCODE_EXTERNAL_DISK ]; 
