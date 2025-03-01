@@ -6,7 +6,10 @@ declare -A _defaults=(
 
 #DETECT THIS SCRIPT PATH
 FZL_DESKTOP_SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+#OS SCRIPTS FAZEM USO DESTES DIRETORIOS
 PROGSATIVOS_DIR="/media/wgn/d4ae1cfc-8228-4bec-a0cc-c6b7345e29bd/PROGSATIVOS"
+_FZL_EMACS_HOME="/media/wgn/EnvsBk1/__devenv__/fzl-emacs"
 
 
 export PATH=$PATH:$FZL_DESKTOP_SCRIPT_PATH

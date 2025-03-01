@@ -1,7 +1,11 @@
 #docker util functions
+
+#### pruning docker images
 #_containers_not_to_prune=("6d3adc68ff04" "41ec0a8af78e")
 _containers_not_to_prune=()
+
 _volume_not_to_prune=()
+
 _images_not_to_prune=()
 
 function _fzl-docker-prune-all-containers(){
@@ -24,6 +28,7 @@ function _fzl-docker-prune-all-containers(){
     done    
 }
 
+
 function _fzl-docker-prune-all-images(){
     echo " ### function _fzl-docker-prune-images(){...";
     for i in $(docker images | awk '{print $3}'); do
@@ -31,6 +36,7 @@ function _fzl-docker-prune-all-images(){
         docker rmi -f $i
     done
 }
+
 
 function _fzl-docker-prune-all-volumes(){
     echo " ### function _fzl-docker-prune-volumes(){...";
@@ -45,6 +51,7 @@ function _fzl-docker-prune-all-volumes(){
         docker volume rm $v
     done
 }
+
 
 function fzl-docker-prune-all-containers(){
     for c in $(docker ps -a | awk '{print $1}'); do docker rm $c; done
@@ -70,9 +77,6 @@ function fzl-docker-prune-all-networks(){
 export -f fzl-docker-prune-all-networks
 
 
-
-
-###
 function fzl-docker-prune-all(){
     if [ $1 == "stops_running_containers" ]; then
         for c in $(docker ps -q); do docker stop $c; done
@@ -97,30 +101,38 @@ function fzl-docker-change-root-dir(){
     NEW_PARTITION="$1"
     ORIGINAL_DIR="/var/lib/docker"
 
-    #check if the function was called with sudo 
-    if [ "$EUID" -ne 0 ]; then
-        echo "Please run this script as root"
-        return 1
-    fi
-
-    if [ -z "$NEW_PARTITION" ]; then
-        echo "Usage: fzl-docker-change-root-dir <new-partition>"
-        return 2
-    fi
-
     echo "Stopping Docker service..."
-    systemctl stop docker
+    sudo systemctl stop docker.socket
+    sudo systemctl stop docker
 
     echo "Mounting the new partition to $ORIGINAL_DIR..."
-    mount "$NEW_PARTITION" "$ORIGINAL_DIR"
+    sudo mount "$NEW_PARTITION" "$ORIGINAL_DIR"
 
     #echo "Updating /etc/fstab to mount the partition on boot..."
     #UUID=$(blkid -s UUID -o value "$NEW_PARTITION")
     #echo "UUID=$UUID $ORIGINAL_DIR ext4 defaults 0 2" >> /etc/fstab
 
     echo "Starting Docker service..."
-    systemctl start docker
+    sudo systemctl start docker.socket
+    sudo systemctl start docker
 
     echo "Docker root directory is now on the partition $NEW_PARTITION"
 }
 export -f fzl-docker-change-root-dir
+
+
+function fzl-docker-portainers-start(){
+    if [ "$(docker ps -q -f name=portainer)" ]; then
+        echo "Portainer container is already running."
+    else
+        if [ "$(docker ps -aq -f name=portainer)" ]; then
+            echo "Starting existing Portainer container..."
+            docker start portainer
+        else
+            echo "Running new Portainer container..."
+            docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+        fi
+    fi
+    firefox http://localhost:9000
+}
+export -f fzl-docker-portainers-start
