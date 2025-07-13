@@ -1,15 +1,12 @@
 #!/bin/bash
 
 #if /media/wgn/d4ae1cfc-8228-4bec-a0cc-c6b7345e29bd/PROGSATIVOS/ides/VSCode-linux-x64/
- echo "@... dev-ides.sh"
+echo "@... dev-ides.sh"
 
- VSCODE_EXTERNAL_DISK="$PROGSATIVOS_DIR/ides/VSCode-linux-x64/"
- VSCODE_HOST_DISK="/home/wgn/PROGSATIVOS/VSCode-linux-x64/"
-
- function fzl-intellij-start(){
-     cd $PROGSATIVOS_DIR/Ides/intellij/idea-IU-243.24978.46/bin
-     ./idea.sh
-     cd -
+function fzl-intellij-start(){
+    cd $PROGSATIVOS_DIR/Ides/intellij/idea-IU-243.24978.46/bin
+    ./idea.sh
+    cd -
 }
 export -f fzl-intellij-start
 
