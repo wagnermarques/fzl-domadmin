@@ -1,8 +1,62 @@
 #!/bin/bash
 
+
+# TODO: what happens if this script is sourced and got errors?
+
+
+# get this script path
+_THIS_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROGSATIVOS_DIR="/run/media/wgn/libvirt_ext4/progsativos/"
+
+
+# ===== PATH env var =====
+function fzl-add-to-path(){
+    export PATH=$1:$PATH
+}
+export -f fzl-add-to-path
+
+
+# ===== caminho pra algumas ides  =====
+_FZL_EMACS_HOME="/run/media/wgn/libvirt_ext4/projects-dom-srcs/fzl-emacs/"
+
+
+# ===== programming languages sdks =====
+# Java JDKs
 declare -A _defaults=(
     ["javaJdkVersion"]="21" 
     ["tomcatVersion"]="9")
+
+JAVA_21_TEMURIM_HOME="$PROGSATIVOS_DIR/javasdks/temurim/jdk-21.0.8+9"
+JAVA_17_TEMURIM_HOME="$PROGSATIVOS_DIR/javasdks/temurim/jdk-17.0.16+8"
+JAVA_11_TEMURIM_HOME="$PROGSATIVOS_DIR/javasdks/temurim/jdk-11.0.28+6"
+
+echo "[INFO] Using Java JDK version: ${_defaults["javaJdkVersion"]}"
+if [ ${_defaults["javaJdkVersion"]} == "21" ]; then
+    JAVA_HOME=$JAVA_21_TEMURIM_HOME
+elif [ ${_defaults["javaJdkVersion"]} == "17" ]; then
+    JAVA_HOME=$JAVA_17_TEMURIM_HOME
+elif [ ${_defaults["javaJdkVersion"]} == "11" ]; then
+    JAVA_HOME=$JAVA_11_TEMURIM_HOME
+else
+    echo "[ERROR]: Java JDK version not supported: ${_defaults["javaJdkVersion"]}"     
+fi  
+
+
+fzl-add-to-path $JAVA_HOME/bin
+java -version
+sleep 20;
+
+
+# ides
+_ECLIPSE_JAVA_HOME=$PROGSATIVOS_DIR/java-ides/eclipse-java-2023-06-R-linux-gtk-x86_64/eclipse
+_ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/Ides/eclipse/eclipse-modeling-2025-06-R-linux-gtk-x86_64/eclipse
+
+#caminhos para alguns outros aplicativos desktop
+ZOTERO_HOME="$PROGSATIVOS_DIR/Research/Zotero_linux-x86_64"
+TELEGRAM_HOME="$PROGSATIVOS_DIR/Telegram/Telegram"
+
+
+
 
 
 # #### RESOLVING PATHS #####
@@ -12,26 +66,8 @@ FZL_DESKTOP_SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export PATH=$PATH:$FZL_DESKTOP_SCRIPT_PATH
 
 
-#ALGUNS OS SCRIPTS FAZEM USO DESTES DIRETORIOS
-PROGSATIVOS_DIR="/run/media/wgn/d4ae1cfc-8228-4bec-a0cc-c6b7345e29bd/PROGSATIVOS"
-
-# caminho pra algumas ides
-_FZL_EMACS_HOME="/run/media/wgn/EnvsBk/__devenv__/fzl-emacs"
-VSCODE_EXTERNAL_DISK="$PROGSATIVOS_DIR/ides/VSCode-linux-x64/"
-VSCODE_HOST_DISK="/home/wgn/PROGSATIVOS/VSCode-linux-x64/"
-
-_ECLIPSE_JAVA_HOME=$PROGSATIVOS_DIR/java-ides/eclipse-java-2023-06-R-linux-gtk-x86_64/eclipse
-_ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/Ides/eclipse/eclipse-modeling-2025-06-R-linux-gtk-x86_64/eclipse
-
-#caminhos para alguns outros aplicativos desktop
-ZOTERO_HOME="$PROGSATIVOS_DIR/Research/Zotero_linux-x86_64"
-TELEGRAM_HOME="$PROGSATIVOS_DIR/Telegram/Telegram"
 
 
-function fzl-add-to-path(){
-    export PATH=$PATH:$1
-}
-export -f fzl-add-to-path
 
 
 ###### SOURCING SCRIPTS FOR ACTIVATE ITS FEATURES #######
