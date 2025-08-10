@@ -1,6 +1,6 @@
 * Some fedora lxde spin utilities
 
-When you want lxde, probably, you want you machine resources to yourself
+When you want lxde, probably, you want you machine resources avaible to you
 
 But saving machine resources don't come at no price
 
@@ -8,10 +8,10 @@ So this scripts is to facilitate ours lives when we are using fedora lxde spin
 
 
 ** Check Laptop Battery
-  I do not find battery check widget in lxde, so this script: *battery-check.sh*
+I do not find battery check widget in lxde, so this script: *battery-check.sh*
 
 ** Control Monitor Brightness
-  Typical shortcuts dot not works in Lxde, so this script: *brightnessctl-set.sh*
+Typical shortcuts dot not works in Lxde, so this script: *brightnessctl-set.sh*
 
 ** Configuring laptop touchpad
 config-touchpad

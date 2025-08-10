@@ -1,4 +1,4 @@
-#!/bin/bash
+x#!/bin/bash
 
 DEFAULT_OUTPUT="screencast.gif"
 OUTPUT_FILE=$DEFAULT_OUTPUT

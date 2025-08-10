@@ -6,7 +6,7 @@
 
 # get this script path
 _THIS_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-PROGSATIVOS_DIR="/run/media/wgn/libvirt_ext4/progsativos/"
+PROGSATIVOS_DIR="/run/media/wgn/libvirt_ext4/progsativos"
 
 
 # ===== PATH env var =====
@@ -17,7 +17,7 @@ export -f fzl-add-to-path
 
 
 # ===== caminho pra algumas ides  =====
-_FZL_EMACS_HOME="/run/media/wgn/libvirt_ext4/projects-dom-srcs/fzl-emacs/"
+_FZL_EMACS_HOME="/run/media/wgn/libvirt_ext4/Projects-Srcs-Desktop/fzl-emacs"
 
 
 # ===== programming languages sdks =====
@@ -43,8 +43,9 @@ fi
 
 
 fzl-add-to-path $JAVA_HOME/bin
+echo "[info] jdk version"
 java -version
-sleep 20;
+
 
 
 # ides
@@ -53,7 +54,7 @@ _ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/Ides/eclipse/eclipse-modeling-2025-06-R
 
 #caminhos para alguns outros aplicativos desktop
 ZOTERO_HOME="$PROGSATIVOS_DIR/Research/Zotero_linux-x86_64"
-TELEGRAM_HOME="$PROGSATIVOS_DIR/Telegram/Telegram"
+TELEGRAM_HOME="$PROGSATIVOS_DIR/Telegram"
 
 
 
@@ -64,7 +65,6 @@ TELEGRAM_HOME="$PROGSATIVOS_DIR/Telegram/Telegram"
 #DETECT THIS SCRIPT PATH
 FZL_DESKTOP_SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export PATH=$PATH:$FZL_DESKTOP_SCRIPT_PATH
-
 
 
 
@@ -86,7 +86,7 @@ sources_files=(
     DotEnv.sh 
     fzl-ambiente-dev-php-fpm-moodle-joomla.sh 
     screencast-scripts.sh 
-    multimedia-scripts.sh 
+    ./multimedia/multimedia-scripts.sh
     docker.sh docker-containers.sh 
     
     dev-servers.sh dev-android.sh dev-nodejs.sh bash-config.sh convert-files.sh 
@@ -107,6 +107,11 @@ for file in ${sources_files[@]}; do
     source $FZL_DESKTOP_SCRIPT_PATH/$file
 done
 
+
+### Multimedia commands
+function fzl-ffmpeg-screencast-record(){
+    bash ./multimedia/ffmpeg-screencast-record.sh
+}
 
 ### Funcoes
 function fzl-zotero-start(){

@@ -1,4 +1,5 @@
 #!/bin/bash
+
 outFileNameWithExtension=$1
 videoSize=1024x768
 frameRate=25
