@@ -57,6 +57,9 @@ ZOTERO_HOME="$PROGSATIVOS_DIR/Research/Zotero_linux-x86_64"
 TELEGRAM_HOME="$PROGSATIVOS_DIR/Telegram"
 
 
+# ### Install Nerd fonts ###
+
+
 
 
 
