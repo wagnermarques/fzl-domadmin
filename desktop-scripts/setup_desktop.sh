@@ -1,23 +1,60 @@
 #!/bin/bash
 
+echo "[setup_desktop.sh] running..."
 
-# TODO: what happens if this script is sourced and got errors?
+
 
 
 # get this script path
 _THIS_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo _THIS_PATH=$_THIS_PATH
+
+source "$_THIS_PATH/utils/path_utils.sh"
+source "$_THIS_PATH/utils/params_utils.sh"
+fzl-add-to-path "$_THIS_PATH"/bin
+
+
+
+
+# some specific setup for different machines
+# without machine name, it will use "desktop" as default
+# if machine name is "cdep", it will mount /dev/sda4 to ~/
+machine_name_from_params=$(get_param "machine_name")
+echo "[setup_desktop.sh] machine_name_from_params=$machine_name_from_params"
+if [ -z "$machine_name_from_params" ]; then
+    echo "[setup_desktop.sh] machine_name_from_params is empty, setting default value"
+    set_param "machine_name" "desktop"
+else
+
+    # perform some actions based on the machine name
+    echo "[setup_desktop.sh] machine_name_from_params is not empty, using it:"
+    if [ "$1" == "cdep" ]; then
+        echo "[setup_desktop.sh] machine_name_from_params is cdep, mounting /dev/sda4 to ~/projs"
+        sudo mount /dev/sda4 ~/projs
+    fi
+fi
+
+#wait for the mount to be ready
+sleep 10
+
+
+# common actions for all machines
 PROGSATIVOS_DIR="/run/media/wgn/libvirt_ext4/progsativos"
 
 
-# ===== PATH env var =====
-function fzl-add-to-path(){
-    export PATH=$1:$PATH
-}
-export -f fzl-add-to-path
-
 
 # ===== caminho pra algumas ides  =====
+_ECLIPSE_JAVA_HOME=$PROGSATIVOS_DIR/java-ides/eclipse-java-2023-06-R-linux-gtk-x86_64/eclipse
+_ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/Ides/eclipse/eclipse-modeling-2025-06-R-linux-gtk-x86_64/eclipse
+
 _FZL_EMACS_HOME="/run/media/wgn/libvirt_ext4/Projects-Srcs-Desktop/fzl-emacs"
+
+
+
+#caminhos para alguns outros aplicativos desktop
+ZOTERO_HOME="$PROGSATIVOS_DIR/research/Zotero_linux-x86_64"
+TELEGRAM_HOME="$PROGSATIVOS_DIR/Telegram"
+
 
 
 # ===== programming languages sdks =====
@@ -41,34 +78,14 @@ else
     echo "[ERROR]: Java JDK version not supported: ${_defaults["javaJdkVersion"]}"     
 fi  
 
-
 fzl-add-to-path $JAVA_HOME/bin
 echo "[info] jdk version"
 java -version
 
 
 
-# ides
-_ECLIPSE_JAVA_HOME=$PROGSATIVOS_DIR/java-ides/eclipse-java-2023-06-R-linux-gtk-x86_64/eclipse
-_ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/Ides/eclipse/eclipse-modeling-2025-06-R-linux-gtk-x86_64/eclipse
-
-#caminhos para alguns outros aplicativos desktop
-ZOTERO_HOME="$PROGSATIVOS_DIR/Research/Zotero_linux-x86_64"
-TELEGRAM_HOME="$PROGSATIVOS_DIR/Telegram"
-
 
 # ### Install Nerd fonts ###
-
-
-
-
-
-# #### RESOLVING PATHS #####
-
-#DETECT THIS SCRIPT PATH
-FZL_DESKTOP_SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-export PATH=$PATH:$FZL_DESKTOP_SCRIPT_PATH
-
 
 
 
@@ -90,25 +107,20 @@ sources_files=(
     fzl-ambiente-dev-php-fpm-moodle-joomla.sh 
     screencast-scripts.sh 
     ./multimedia/multimedia-scripts.sh
+    ./devices/fzl-touchpad-enable-click-on-tap.sh
     docker.sh docker-containers.sh 
     
     dev-servers.sh dev-android.sh dev-nodejs.sh bash-config.sh convert-files.sh 
      
     fzl-emacs.sh)
 
-# add in array if gnome are in use by the user
-if [ "$XDG_CURRENT_DESKTOP" = "GNOME" ]; then
-    echo .
-    echo " ===> GNOME detected, sourcing some gnome scripts"
-    sources_files+=(
-        #gnome_screenshots_shortcuts.sh
-    )
-fi
-
-
 for file in ${sources_files[@]}; do
-    source $FZL_DESKTOP_SCRIPT_PATH/$file
+    source $_THIS_PATH/$file
 done
+
+
+
+
 
 
 ### Multimedia commands
