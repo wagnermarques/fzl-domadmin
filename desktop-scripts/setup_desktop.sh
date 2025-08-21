@@ -12,8 +12,7 @@ echo _THIS_PATH=$_THIS_PATH
 source "$_THIS_PATH/utils/path_utils.sh"
 source "$_THIS_PATH/utils/params_utils.sh"
 fzl-add-to-path "$_THIS_PATH"/bin
-
-
+fzl-add-to-path "$_THIS_PATH"/lsp
 
 
 # some specific setup for different machines
@@ -35,7 +34,7 @@ else
 fi
 
 #wait for the mount to be ready
-sleep 10
+sleep 1
 
 
 # common actions for all machines
@@ -79,6 +78,9 @@ else
 fi  
 
 fzl-add-to-path $JAVA_HOME/bin
+fzl-add-to-path $_THIS_PATH
+chmod +x $_THIS_PATH/*.sh
+
 echo "[info] jdk version"
 java -version
 
