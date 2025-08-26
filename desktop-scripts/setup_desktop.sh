@@ -11,8 +11,11 @@ echo _THIS_PATH=$_THIS_PATH
 
 source "$_THIS_PATH/utils/path_utils.sh"
 source "$_THIS_PATH/utils/params_utils.sh"
+
 fzl-add-to-path "$_THIS_PATH"/bin
 fzl-add-to-path "$_THIS_PATH"/lsp
+fzl-add-to-path "$_THIS_PATH"/multimedia
+
 
 
 # some specific setup for different machines
@@ -37,16 +40,18 @@ fi
 sleep 1
 
 
+
 # common actions for all machines
 PROGSATIVOS_DIR="/run/media/wgn/libvirt_ext4/progsativos"
 
 
 
 # ===== caminho pra algumas ides  =====
-_ECLIPSE_JAVA_HOME=$PROGSATIVOS_DIR/java-ides/eclipse-java-2023-06-R-linux-gtk-x86_64/eclipse
-_ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/Ides/eclipse/eclipse-modeling-2025-06-R-linux-gtk-x86_64/eclipse
+_ECLIPSE_JAVA_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-java-2025-06-R-linux-gtk-x86_64
+_ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-modeling-2025-06-R-linux-gtk-x86_64
+_INTELLIJ_HOME=$PROGSATIVOS_DIR/ides/idea-IU-252.23892.409
 
-_FZL_EMACS_HOME="/run/media/wgn/libvirt_ext4/Projects-Srcs-Desktop/fzl-emacs"
+_FZL_EMACS_HOME="/run/media/wgn/libvirt_ext4/Projects-Srcs-Desktop/fzl-emacs" #fzl-emacs-start command
 
 
 
@@ -101,6 +106,7 @@ sources_files=(
     dev-javafx.sh
     dev-ides.sh 
     dev-ides-eclipse.sh
+    dev-ides-intellij.sh
     
     compare-files-and-dirs.sh
     

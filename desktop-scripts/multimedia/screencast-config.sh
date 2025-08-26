@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # Define variables for the screencast
-OUTPUT_DIR="$HOME/Fzl/Screencasts"
+OUTPUT_DIR="$HOME/Screencasts"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 OUTPUT_FILENAME="screencast_${TIMESTAMP}.mp4"
 FULL_PATH="${OUTPUT_DIR}/${OUTPUT_FILENAME}"
 
 # --- Video Settings ---
 VIDEO_INPUT="x11grab"
-DISPLAY_NUM=":1.0"
+DISPLAY_NUM=":0.0"
 RESOLUTION="1920x1080"
 VIDEO_CODEC="h264_vaapi"
 VIDEO_BITRATE="4M"
