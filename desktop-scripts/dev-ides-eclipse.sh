@@ -19,6 +19,10 @@ function fzl-sts-start(){
 export -f fzl-sts-start
 
 function fzl-eclipse-modelling-start(){
+    echo .
+    echo "[DEV-IDES-ECLIPSE] function fzl-eclipse-modelling-start(){...."
+    echo "[DEV-IDES-ECLIPSE] Using Java JDK version: ${_defaults["javaJdkVersion"]}"
+    echo "[DEV-IDES-ECLIPSE] _ECLIPSE_MODELLING_HOME = $_ECLIPSE_MODELLING_HOME"    
     "$_ECLIPSE_MODELLING_HOME/eclipse"
 }
 export -f fzl-eclipse-modelling-start
