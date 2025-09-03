@@ -2,8 +2,11 @@
 
 echo "[setup_desktop.sh] running..."
 
+function echoerr() { echo "$@" 1>&2; }
+function echoout() { echo "$@"; }
 
-
+echo .
+echoout "===== Setup paths and source utils ====="
 
 # get this script path
 _THIS_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -18,6 +21,8 @@ fzl-add-to-path "$_THIS_PATH"/multimedia
 
 
 
+echo .
+echoout "===== Machine specific setup ====="
 # some specific setup for different machines
 # without machine name, it will use "desktop" as default
 # if machine name is "cdep", it will mount /dev/sda4 to ~/
@@ -40,10 +45,10 @@ fi
 sleep 1
 
 
-
+echo .
+echoout "===== Paths to some common programs and directories ====="
 # common actions for all machines
-PROGSATIVOS_DIR="/run/media/wgn/libvirt_ext4/progsativos"
-
+PROGSATIVOS_DIR="/run/media/wgn/libvirt_btrfs/progsativos"
 
 
 # ===== caminho pra algumas ides  =====
@@ -51,7 +56,7 @@ _ECLIPSE_JAVA_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-java-2025-06-R-linu
 _ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-modeling-2025-06-R-linux-gtk-x86_64
 _INTELLIJ_HOME=$PROGSATIVOS_DIR/ides/idea-IU-252.23892.409
 
-_FZL_EMACS_HOME="/run/media/wgn/libvirt_ext4/Projects-Srcs-Desktop/fzl-emacs" #fzl-emacs-start command
+_FZL_EMACS_HOME="/run/media/wgn/libvirt_btrfs/Projects-Srcs-Desktop/fzl-emacs" #fzl-emacs-start command
 
 
 
@@ -59,17 +64,20 @@ _FZL_EMACS_HOME="/run/media/wgn/libvirt_ext4/Projects-Srcs-Desktop/fzl-emacs" #f
 ZOTERO_HOME="$PROGSATIVOS_DIR/research/Zotero_linux-x86_64"
 TELEGRAM_HOME="$PROGSATIVOS_DIR/Telegram"
 
+JAVA_21_TEMURIM_HOME="$PROGSATIVOS_DIR/javasdks/temurim/jdk-21.0.8+9"
+JAVA_17_TEMURIM_HOME="$PROGSATIVOS_DIR/javasdks/temurim/jdk-17.0.16+8"
+JAVA_11_TEMURIM_HOME="$PROGSATIVOS_DIR/javasdks/temurim/jdk-11.0.28+6"
 
 
-# ===== programming languages sdks =====
+
+
+echoout "===== declaring some default properties ====="
 # Java JDKs
 declare -A _defaults=(
     ["javaJdkVersion"]="21" 
     ["tomcatVersion"]="9")
 
-JAVA_21_TEMURIM_HOME="$PROGSATIVOS_DIR/javasdks/temurim/jdk-21.0.8+9"
-JAVA_17_TEMURIM_HOME="$PROGSATIVOS_DIR/javasdks/temurim/jdk-17.0.16+8"
-JAVA_11_TEMURIM_HOME="$PROGSATIVOS_DIR/javasdks/temurim/jdk-11.0.28+6"
+
 
 echo "[INFO] Using Java JDK version: ${_defaults["javaJdkVersion"]}"
 if [ ${_defaults["javaJdkVersion"]} == "21" ]; then
