@@ -28,6 +28,8 @@ echoout "===== Machine specific setup ====="
 # if machine name is "cdep", it will mount /dev/sda4 to ~/
 machine_name_from_params=$(get_param "machine_name")
 echo "[setup_desktop.sh] machine_name_from_params=$machine_name_from_params"
+echo .
+
 if [ -z "$machine_name_from_params" ]; then
     echo "[setup_desktop.sh] machine_name_from_params is empty, setting default value"
     set_param "machine_name" "desktop"
@@ -48,7 +50,7 @@ sleep 1
 echo .
 echoout "===== Paths to some common programs and directories ====="
 # common actions for all machines
-PROGSATIVOS_DIR="/run/media/wgn/libvirt_btrfs/progsativos"
+PROGSATIVOS_DIR="/run/media/wgn/ext4/progsativos"
 
 
 # ===== caminho pra algumas ides  =====
@@ -56,7 +58,7 @@ _ECLIPSE_JAVA_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-java-2025-06-R-linu
 _ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-modeling-2025-06-R-linux-gtk-x86_64
 _INTELLIJ_HOME=$PROGSATIVOS_DIR/ides/idea-IU-252.23892.409
 
-_FZL_EMACS_HOME="/run/media/wgn/libvirt_btrfs/Projects-Srcs-Desktop/fzl-emacs" #fzl-emacs-start command
+_FZL_EMACS_HOME="/run/media/wgn/ext4/Projects-Srcs-Desktop/fzl-emacs" #fzl-emacs-start command
 
 
 
