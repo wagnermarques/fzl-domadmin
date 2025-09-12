@@ -18,6 +18,7 @@ source "$_THIS_PATH/utils/params_utils.sh"
 fzl-add-to-path "$_THIS_PATH"/bin
 fzl-add-to-path "$_THIS_PATH"/lsp
 fzl-add-to-path "$_THIS_PATH"/multimedia
+fzl-add-to-path "$_THIS_PATH"/samba
 
 
 
@@ -126,6 +127,7 @@ sources_files=(
     screencast-scripts.sh 
     ./multimedia/multimedia-scripts.sh
     ./devices/fzl-touchpad-enable-click-on-tap.sh
+    ./samba/fzl-smb-criar-pasta-compartilhada-publica.sh
     docker.sh docker-containers.sh 
     
     dev-servers.sh dev-android.sh dev-nodejs.sh bash-config.sh convert-files.sh 

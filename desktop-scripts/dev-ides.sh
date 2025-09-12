@@ -43,7 +43,7 @@ export -f fzl-vscode-start
 #db front ends
 function fzl-squirrelsql-start(){
   fzl-java-se
-  java -jar "$PROGSATIVOS_DIR/db-ides/squirrelsql-4.6.0-optional/squirrel-sql.jar"
+  java -jar "$PROGSATIVOS_DIR/db-ides/squirrelsql-4.8.0-optional/squirrel-sql.jar"
 }
 export -f fzl-squirrelsql-start
 
