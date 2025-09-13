@@ -19,6 +19,7 @@ fzl-add-to-path "$_THIS_PATH"/bin
 fzl-add-to-path "$_THIS_PATH"/lsp
 fzl-add-to-path "$_THIS_PATH"/multimedia
 fzl-add-to-path "$_THIS_PATH"/samba
+fzl-add-to-path "$_THIS_PATH"/libvirt
 
 
 
@@ -128,6 +129,7 @@ sources_files=(
     ./multimedia/multimedia-scripts.sh
     ./devices/fzl-touchpad-enable-click-on-tap.sh
     ./samba/fzl-smb-criar-pasta-compartilhada-publica.sh
+    ./libvirt/fzl-libvirt.sh 
     docker.sh docker-containers.sh 
     
     dev-servers.sh dev-android.sh dev-nodejs.sh bash-config.sh convert-files.sh 
