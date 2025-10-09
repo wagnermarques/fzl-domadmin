@@ -58,9 +58,22 @@ PROGSATIVOS_DIR="/run/media/wgn/ext4/progsativos"
 # ===== caminho pra algumas ides  =====
 _ECLIPSE_JAVA_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-java-2025-06-R-linux-gtk-x86_64
 _ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-modeling-2025-06-R-linux-gtk-x86_64
+
+#https://www.jetbrains.com/idea/download/?section=linux
 _INTELLIJ_HOME=$PROGSATIVOS_DIR/ides/idea-IU-252.23892.409
 
+#https://www.jetbrains.com/webstorm/download/download-thanks.html
+
+#https://www.jetbrains.com/clion/download/?section=linux
+
+#https://www.jetbrains.com/pycharm/download/?section=linux
+
+
+
 _FZL_EMACS_HOME="/run/media/wgn/ext4/Projects-Srcs-Desktop/fzl-emacs" #fzl-emacs-start command
+
+#https://www.usebruno.com/downloads
+_BRUNO_AppImage="/run/media/wgn/ext4/progsativos/bruno/bruno_2.12.0_x86_64_linux.AppImage"
 
 
 
@@ -141,16 +154,31 @@ for file in ${sources_files[@]}; do
 done
 
 
+### Battery info
+function fzl-battery-info(){
+    upower -i $(upower -e | grep 'BAT') | grep --color=never -E "state|to\ full|percentage"
+}
+export -f fzl-battery-info
 
-
-
+function fzl-battery-info-verbose(){
+    upower -i $(upower -e | grep 'BAT')
+}
+export -f fzl-battery-info-verbose
 
 ### Multimedia commands
 function fzl-ffmpeg-screencast-record(){
     bash ./multimedia/ffmpeg-screencast-record.sh
 }
 
-### Funcoes
+
+
+### Functions to starts some apps
+function fzl-bruno-start(){
+    chmod +x $_BRUNO_AppImage
+    $_BRUNO_AppImage
+}
+export -f fzl-bruno-start
+
 function fzl-zotero-start(){
     "$ZOTERO_HOME/zotero" &
 }

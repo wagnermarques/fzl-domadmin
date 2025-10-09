@@ -4,7 +4,7 @@
 echo "@... dev-ides.sh"
 
 function fzl-intellij-start(){
-    cd $PROGSATIVOS_DIR/Ides/intellij/idea-IU-243.24978.46/bin
+    cd $PROGSATIVOS_DIR/ides/intellij/idea-IU-252.26199.169/bin
     ./idea.sh
     cd -
 }

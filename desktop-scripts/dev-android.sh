@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Android Studio and SDK Home Directories
-ANDROID_STUDIO_HOME="$PROGSATIVOS_DIR/Android/android-studio-2024.3.1.13-linux/android-studio"
+ANDROID_STUDIO_HOME="$PROGSATIVOS_DIR/android/android-studio"
 ANDROID_SDK_HOME="$PROGSATIVOS_DIR/Android/Sdk"
 
 # Set Android-related environment variables
@@ -60,7 +60,7 @@ export -f fzl-android-app-list
 # Upload a file to device's SD card
 function fzl-android-upload-file(){
     if [ $# -ne 3 ]; then
-        echo "Usage: fzl-android-upload-file <device_serial> <local_file_path> <remote_sdcard_path>"
+        #echo "Usage: fzl-android-upload-file <device_serial> <local_file_path> <remote_sdcard_path>"
         return 1
     fi
     adb -s "$1" push "$2" "$3"
