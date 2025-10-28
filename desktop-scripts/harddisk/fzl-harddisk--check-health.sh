@@ -30,6 +30,7 @@ check_deps() {
 }
 check_deps
 
+
 # List disks with improved formatting
 list_disks() {
     echo -e "\n${YELLOW}Available storage devices:${NC}"
@@ -41,6 +42,7 @@ list_disks() {
     }'
 }
 
+
 # Device selection
 if [ -z "$1" ]; then
     list_disks
@@ -49,6 +51,7 @@ if [ -z "$1" ]; then
 else
     device="$1"
 fi
+
 
 # Validate device
 if [[ "$device" =~ ^/dev/[a-z]+[0-9]+$ ]]; then
@@ -62,6 +65,7 @@ fi
     list_disks
     exit 1
 }
+
 
 # SMART check with better error handling
 check_smart() {
@@ -97,6 +101,7 @@ check_smart() {
         smartctl -A "$device" | awk '/Wear_Leveling|Percent_Lifetime|Media_Wearout/ {print}'
     fi
 }
+
 
 # Performance tests with fixed IOPS formatting
 run_perf_tests() {
@@ -134,6 +139,7 @@ run_perf_tests() {
         fi
     fi
 }
+
 
 # Main execution
 echo -e "\n${YELLOW}=== Testing $device ===${NC}"
