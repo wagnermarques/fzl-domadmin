@@ -167,7 +167,7 @@ export -f fzl-battery-info-verbose
 
 ### Multimedia commands
 function fzl-ffmpeg-screencast-record(){
-    bash ./multimedia/ffmpeg-screencast-record.sh
+    bash $_THIS_PATH/multimedia/ffmpeg-screencast-record.sh
 }
 
 
