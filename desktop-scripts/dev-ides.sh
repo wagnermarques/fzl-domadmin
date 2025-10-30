@@ -39,7 +39,14 @@ function fzl-vscode-start(){
   fi;
 }
 export -f fzl-vscode-start
-  
+
+function fzl-theia-start(){
+    chmod +x $PROGSATIVOS_DIR/ides/TheiaIDE.AppImage
+    $PROGSATIVOS_DIR/ides/TheiaIDE.AppImage
+}
+export -f fzl-theia-start
+
+
 #db front ends
 function fzl-squirrelsql-start(){
   fzl-java-se
