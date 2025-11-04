@@ -3,12 +3,15 @@
 #if /media/wgn/d4ae1cfc-8228-4bec-a0cc-c6b7345e29bd/PROGSATIVOS/ides/VSCode-linux-x64/
 echo "@... dev-ides.sh"
 
+PROGSATIVOS_inLibvirt_disk=/run/media/wgn/libvirt/PROGSATIVOS
+
 function fzl-intellij-start(){
     cd $PROGSATIVOS_DIR/ides/intellij/idea-IU-252.26199.169/bin
     ./idea.sh
     cd -
 }
 export -f fzl-intellij-start
+
 
 function fzl-vscode-setup-chrome-sandbox(){
   if [ -d $VSCODE_EXTERNAL_DISK ]; 
@@ -26,6 +29,7 @@ function fzl-vscode-setup-chrome-sandbox(){
 }
 export -f fzl-vscode-setup-chrome-sandbox           
 
+
 function fzl-vscode-start(){  
   if [ -d $VSCODE_EXTERNAL_DISK ]; 
     then
@@ -40,9 +44,10 @@ function fzl-vscode-start(){
 }
 export -f fzl-vscode-start
 
+
+# the theia have appImage.home dir outside of host to make it portable
 function fzl-theia-start(){
-    chmod +x $PROGSATIVOS_DIR/ides/TheiaIDE.AppImage
-    $PROGSATIVOS_DIR/ides/TheiaIDE.AppImage
+    $PROGSATIVOS_inLibvirt_disk/ides/eclipse-theia/TheiaIDE.AppImage &    
 }
 export -f fzl-theia-start
 
