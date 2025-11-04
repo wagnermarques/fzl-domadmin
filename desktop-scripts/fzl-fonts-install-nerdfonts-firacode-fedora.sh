@@ -5,7 +5,7 @@ set -e
 
 # Define the download URL for the FiraMono Nerd Font.
 # This URL is the one you provided.
-FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/FiraCode.zip"
+FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraCode.zip"
 
 # Define the installation directory
 FONT_DIR="$HOME/.local/share/fonts"
