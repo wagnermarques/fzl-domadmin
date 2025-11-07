@@ -6,7 +6,7 @@ echo "@... dev-ides.sh"
 PROGSATIVOS_inLibvirt_disk=/run/media/wgn/libvirt/PROGSATIVOS
 
 function fzl-intellij-start(){
-    cd $PROGSATIVOS_DIR/ides/intellij/idea-IU-252.26199.169/bin
+    cd $PROGSATIVOS_inLibvirt_disk/ides/intellij/idea-IC-252.27397.103/bin
     ./idea.sh
     cd -
 }
