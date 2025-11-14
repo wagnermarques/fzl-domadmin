@@ -47,7 +47,14 @@ export -f fzl-vscode-start
 
 # the theia have appImage.home dir outside of host to make it portable
 function fzl-theia-start(){
-    $PROGSATIVOS_inLibvirt_disk/ides/eclipse-theia/TheiaIDE.AppImage &    
+    pgrep -f "TheiaIDE\.AppImage"    
+    cd $PROGSATIVOS_inLibvirt_disk/ides/eclipse-theia
+    chmod +x TheiaIDE.AppImage
+    ls -la TheiaIDE.AppImage
+    echo $@
+    #execute TheiaIDE.AppImage with args
+    #TheiaIDE.AppImage --appimage-home    
+    $PROGSATIVOS_inLibvirt_disk/ides/eclipse-theia/TheiaIDE.AppImage $@ &
 }
 export -f fzl-theia-start
 
