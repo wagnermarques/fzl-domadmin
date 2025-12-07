@@ -1,42 +1,72 @@
 #!/bin/bash
 
+
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
-# Define the download URL for the FiraMono Nerd Font.
-# This URL is the one you provided.
-FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraCode.zip"
 
-# Define the installation directory
-FONT_DIR="$HOME/.local/share/fonts"
+###
+### INSTALL SOME FONTS FROM RPM packages
+###
+function install_mscorefonts(){
+    sudo dnf upgrade --refresh
+
+    # install some dependencies to be able to install another fonts
+    # specially microsoft fonts
+    sudo dnf install curl cabextract xorg-x11-font-utils fontconfig
+
+    # install from rpm
+    sudo rpm -i --nodigest https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
+
+    # rrefreh font cache
+    fc-cache -fv
+
+    # shows intalled fonts
+    fc-list | grep -i "Arial\|Times\|Verdana\|Courier"
+}
+#install_mscorefonts
+
+
+
+
+
+# system fonts dir ( for all users )
+FONT_INSTALLATION_DIR="/usr/local/share/fonts"
+sudo mkdir -p $FONT_INSTALLATION_DIR
+
 
 # Define the temporary directory for download and extraction
 TEMP_DIR=$(mktemp -d)
+DOWNLOAD_DIR="/run/media/wgn/ext4/SHARED_FILES/fonts-downloaded"
 
-echo "===> Installing Nerd Font"
+declare -A fonts_to_be_installed
+fonts_to_be_installed["FiraCode"]="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraCode.zip"
+fonts_to_be_installed["BigBlueTerminal"]="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/BigBlueTerminal.zip"
 
-# Create the fonts directory if it doesn't exist
-echo "  • Creating font directory: $FONT_DIR"
-mkdir -p "$FONT_DIR"
+###
+### INSTALL NERD FONTS
+###
+function install_nerdfonts(){
 
-# Download the font file
-echo "  • Downloading font from URL..."
-wget -O "$TEMP_DIR/FiraMono.zip" "$FONT_URL"
+    #downloading fonts
+    #https://docs.fedoraproject.org/en-US/quick-docs/fonts/
+    for f in ${!fonts_to_be_installed[@]}; do        
+        fontZipFileName="$f.zip"
+        fontUrl=${fonts_to_be_installed[$f]}
+        echo $fontZipFileName
+        echo $fontUrl
 
-# Unzip the font files
-echo "  • Unzipping font files to $FONT_DIR"
-unzip "$TEMP_DIR/FiraMono.zip" -d "$FONT_DIR"
+        wget --quiet --show-progress  -O "$DOWNLOAD_DIR/$fontZipFileName" "$fontUrl"
 
-# Clean up the temporary directory
-echo "  • Cleaning up temporary files"
-rm -rf "$TEMP_DIR"
+        sudo mkdir -p "$FONT_INSTALLATION_DIR/$f"
+        sudo unzip -q "$DOWNLOAD_DIR/$fontZipFileName" -d "$FONT_INSTALLATION_DIR/$f"
+        sudo chown -R root: "$FONT_INSTALLATION_DIR/$f"
+        sudo chmod 644 -R "$FONT_INSTALLATION_DIR/$f/" 
+        sudo restorecon -vFr "$FONT_INSTALLATION_DIR/$f"
+    done;
+}
+install_nerdfonts
+sudo fc-cache -v
 
-# Update the font cache
-echo "  • Updating font cache..."
-fc-cache -fv
+fc-list | grep -i "fira"
 
-# Verify the installation (optional)
-echo "  • Verifying FiraMono installation..."
-fc-list | grep -i "FiraMono"
-
-echo "===> Nerd Font installation complete!"
