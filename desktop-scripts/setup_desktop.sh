@@ -2,18 +2,21 @@
 
 echo "[setup_desktop.sh] running..."
 
-function echoerr() { echo "$@" 1>&2; }
-function echoout() { echo "$@"; }
+function echoerr()  { echo "$@" 1>&2; }
+function echoout()  { echo "$@"; }
+function echoout1() { echo " ############### " "$@" " ###############"; }
+function echoout2() { echo "----- " "$@"; }
 
 echo .
-echoout "===== Setup paths and source utils ====="
+echoout1 "Setup paths and source utils"
 
-# get this script path
+echoout2 "Config PATH environment variable"
 _THIS_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-echo _THIS_PATH=$_THIS_PATH
+echoout _THIS_PATH=$_THIS_PATH
 
 source "$_THIS_PATH/utils/path_utils.sh"
 source "$_THIS_PATH/utils/params_utils.sh"
+source "$_THIS_PATH/utils/os-utils.sh"
 
 fzl-add-to-path "$_THIS_PATH"/bin
 fzl-add-to-path "$_THIS_PATH"/lsp
@@ -22,15 +25,15 @@ fzl-add-to-path "$_THIS_PATH"/samba
 fzl-add-to-path "$_THIS_PATH"/libvirt
 
 
-
 echo .
-echoout "===== Machine specific setup ====="
+echoout2 "Machine specific setup..."
 # some specific setup for different machines
 # without machine name, it will use "desktop" as default
-# if machine name is "cdep", it will mount /dev/sda4 to ~/
+echoout 'if machine name is "cdep", it will mount /dev/sda4 to ~/'
 machine_name_from_params=$(get_param "machine_name")
 echo "[setup_desktop.sh] machine_name_from_params=$machine_name_from_params"
 echo .
+
 
 if [ -z "$machine_name_from_params" ]; then
     echo "[setup_desktop.sh] machine_name_from_params is empty, setting default value"
@@ -45,59 +48,118 @@ else
     fi
 fi
 
+
 #wait for the mount to be ready
-sleep 1
+sleep 2
 
 
 echo .
-echoout "===== Paths to some common programs and directories ====="
-# common actions for all machines
-PROGSATIVOS_DIR="/run/media/wgn/ext4/progsativos"
+echo .
+echoout1 "Declaring some default properties"
+declare -A _defaults=(
+    ["javaJdkVersion"]="21" 
+    ["tomcatVersion"]="9")
+echoout "javaJdkVersion ${_defaults[javaJdkVersion]}"
+echoout "tomcatVersion ${_defaults[tomcatVersion]}"
 
 
-# ===== caminho pra algumas ides  =====
+
+echo .
+echo .
+echoout1 "GLOBAL VARIABLES"
+
+PROGSATIVOS_DIR_EXT4_PARTITION="/run/media/wgn/ext4/progsativos"
+PROGSATIVOS_DIR_BTRFS400G_PARTITION="/media/wgn/btrfs400G/PROGSATIVOS"
+
+#usando a particao ext4 como padrao, por enquanto
+PROGSATIVOS_DIR="$PROGSATIVOS_DIR_EXT4_PARTITION"
+
+
+
+
+
+echoout2 "Progsativos directories"
+echoout "PROGSATIVOS_DIR_EXT4_PARTITION=$PROGSATIVOS_DIR_EXT4_PARTITION"
+echoout "PROGSATIVOS_DIR_BTRFS400G_PARTITION=$PROGSATIVOS_DIR_BTRFS400G_PARTITION"
+echoout "PROGSATIVOS_DIR=$PROGSATIVOS_DIR"
+
+echoout1 "GLOBAL VARIABLES: IDES"
+echoout2 "GLOBAL VARIABLES: compiled emacs executable depends on the OS type debian like or redhat like"
+# detect if os is debian like or redhat like
+
+OS_FAMILY=$(fzl-os-utils-detect-os --family)
+OS_ID=$(fzl-os-utils-detect-os --id)
+
+
+if [ "$OS_FAMILY" == "debian" ]; then
+    echoout "OS is debian like"
+elif [ "$OS_FAMILY" == "rhel" ]; then
+    echoout "OS is redhat like"
+else
+    echo "[ERROR] OS type not supported: $OS_FAMILY"
+fi
+echo OS_ID=$OS_ID
+echo OS_FAMILY=$OS_FAMILY
+echo .
+echo .
+# use
+# /media/wgn/btrfs400G/PROGSATIVOS/ides/emacs/emacs-30.2/src/emacs in debian like
+# and
+#/run/media/wgn/ext4/progsativos/ides/emacs/emacs-30.2/src/emacs-fed-41 in redhat like
+
+if [ "$OS_FAMILY" == "debian" ] || [ "$OS_ID" == "ubuntu" ]; then
+    export _EMACS_EXECUTABLE="$PROGSATIVOS_DIR_BTRFS400G_PARTITION/ides/emacs/emacs-30.2/src/emacs"
+elif [ "$OS_FAMILY" == "fedora" ] || [ "$OS_FAMILY" == "rhel" ]; then
+    export _EMACS_EXECUTABLE="$PROGSATIVOS_DIR_EXT4_PARTITION/ides/emacs/emacs-30.2/src/emacs-fed-41"
+else
+    echo "[ERROR] OS type not supported: $OS_ID"
+fi
+
+_FZL_EMACS_HOME="/media/wgn/btrfs400G//Projects-Srcs-Desktop/fzl-emacs" #fzl-emacs-start command
+echoout "_FZL_EMACS_HOME=\"/media/wgn/btrfs400G/Projects-Srcs-Desktop/fzl-emacs\"" #fzl-emacs-start command
+
+
+
 _ECLIPSE_JAVA_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-java-2025-06-R-linux-gtk-x86_64
-_ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-modeling-2025-06-R-linux-gtk-x86_64
+echoout "_ECLIPSE_JAVA_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-java-2025-06-R-linux-gtk-x86_64"
 
-#https://www.jetbrains.com/idea/download/?section=linux
+_ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-modeling-2025-06-R-linux-gtk-x86_64
+echoout "_ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-modeling-2025-06-R-linux-gtk-x86_64"
+
 _INTELLIJ_HOME=$PROGSATIVOS_DIR/ides/idea-IU-252.23892.409
+echoout _INTELLIJ_HOME=$PROGSATIVOS_DIR/ides/idea-IU-252.23892.409
 
 #https://www.jetbrains.com/webstorm/download/download-thanks.html
-
 #https://www.jetbrains.com/clion/download/?section=linux
-
+#https://www.jetbrains.com/pycharm/download/?section=linux
+#https://www.jetbrains.com/webstorm/download/download-thanks.html
+#https://www.jetbrains.com/clion/download/?section=linux
 #https://www.jetbrains.com/pycharm/download/?section=linux
 
 
 
-_FZL_EMACS_HOME="/run/media/wgn/ext4/Projects-Srcs-Desktop/fzl-emacs" #fzl-emacs-start command
 
-#https://www.usebruno.com/downloads
 _BRUNO_AppImage="/run/media/wgn/ext4/progsativos/bruno/bruno_2.12.0_x86_64_linux.AppImage"
+echoout "_BRUNO_AppImage=\"/media/wgn/ext4/progsativos/bruno/bruno_2.12.0_x86_64_linux.AppImage\""
 
-
-
-#caminhos para alguns outros aplicativos desktop
 ZOTERO_HOME="$PROGSATIVOS_DIR/research/Zotero_linux-x86_64"
+echoout "ZOTERO_HOME=\"$PROGSATIVOS_DIR/research/Zotero_linux-x86_64\""
+
 TELEGRAM_HOME="$PROGSATIVOS_DIR/Telegram"
+echoout "TELEGRAM_HOME=\"$PROGSATIVOS_DIR/Telegram\""
 
 JAVA_21_TEMURIM_HOME="$PROGSATIVOS_DIR/javasdks/temurim/jdk-21.0.8+9"
+echoout "JAVA_21_TEMURIM_HOME=\"$PROGSATIVOS_DIR/javasdks/temurim/jdk-21.0.8+9\""
+
 JAVA_17_TEMURIM_HOME="$PROGSATIVOS_DIR/javasdks/temurim/jdk-17.0.16+8"
+echoout "JAVA_17_TEMURIM_HOME=\"$PROGSATIVOS_DIR/javasdks/temurim/jdk-17.0.16+8\""
+
 JAVA_11_TEMURIM_HOME="$PROGSATIVOS_DIR/javasdks/temurim/jdk-11.0.28+6"
-
-
-
-
-echoout "===== declaring some default properties ====="
-# Java JDKs
-declare -A _defaults=(
-    ["javaJdkVersion"]="21" 
-    ["tomcatVersion"]="9")
-
+echoout "JAVA_11_TEMURIM_HOME=\"$PROGSATIVOS_DIR/javasdks/temurim/jdk-11.0.28+6\""
 
 
 echo "[INFO] Using Java JDK version: ${_defaults["javaJdkVersion"]}"
-if [ ${_defaults["javaJdkVersion"]} == "21" ]; then
+if [ ${_defaults["javaJdkVersion"]} == "21" ]; then    
     JAVA_HOME=$JAVA_21_TEMURIM_HOME
 elif [ ${_defaults["javaJdkVersion"]} == "17" ]; then
     JAVA_HOME=$JAVA_17_TEMURIM_HOME
@@ -115,10 +177,7 @@ echo "[info] jdk version"
 java -version
 
 
-
-
 # ### Install Nerd fonts ###
-
 
 
 

@@ -7,7 +7,12 @@
 
 source ../utils/fzl-echo.sh 
 
+export fzl-qcow2-image-win11-path="/run/media/wgn/ext4/libvirt-images/win11"
 
+
+###########################################
+### libvirt management functions        ###
+###########################################
 
 function fzl-libvirt-start-service(){
     sudo systemctl start libvirtd
@@ -27,19 +32,24 @@ function fzl-libvirt-lsmod-kvm(){
 export -f fzl-libvirt-lsmod-kvm
 
 
-function fzl-libvirt-qcow2-img-to-default-dir(){
+function fzl-libvirt-rsync-qcow2-img-to-default-dir(){
     qcow2Img=$1
     sudo rsync -va --progress $qcow2Img /var/lib/libvirt/images/win11.qcow2
     }
-export -f fzl-libvirt-qcow2-img-to-default-dir
+export -f fzl-libvirt-rsync-qcow2-img-to-default-dir
 
 
-export fzl-qcow2-image-win11-path="/run/media/wgn/ext4/libvirt-images/win11"
 function fzl-virt-install-qcow2-preexistent-image(){
-    virt-install --name <VM_Name> --ram <RAM_in_MB> --vcpus <Number_of_CPUs> --disk path=/path/to/your/windows.qcow2,format=qcow2 --import --os-variant <os_variant>
+    #virt-install --name <VM_Name> --ram <RAM_in_MB> --vcpus <Number_of_CPUs> --disk path=/path/to/your/windows.qcow2,format=qcow2   --import --os-variant <os_variant>
+    virt-install --name $VM_Name  --ram $RAM_in_MB  --vcpus $Number_of_CPUs  --disk path="$path_to_your_windows.qcow2,format=qcow2" --import --os-variant $os_variant
+    #provide this variables to the function
 }
 
 
+
+###########################################
+### virsh network management functions  ###
+###########################################
 function fzl-virsh-net-list() {
     # List all defined networks
     sudo virsh net-list --all
@@ -60,11 +70,17 @@ function fzl-virsh-net-info() {
 export -f fzl-virsh-net-info
 
 
-function fzl-qcow2-img-convert-to-vmdk(){
+
+
+
+#############################################
+### qemu-img conversion functions         ###
+#############################################
+function fzl-convert-qcow2-img-to-vmdk(){
     vmdkImgPath=$1
     qcowImgPath=$2
     qemu-img convert -f vmdk -O qcow2 $vmdkImgPath $qcowImgPath
 }
-
+export -f fzl-convert-qcow2-img-to-vmdk
 
 

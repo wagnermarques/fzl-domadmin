@@ -1,2 +1,3 @@
-VAR_LIB_LIBVIRT_IMAGES=/run/media/wgn/libvirt_ext4/libvirt-images
-ISO_PATH_HOME=/run/media/wgn/libvirt_ext4/libvirt-isos
+BASE_PATH_HOME=/run/media/wgn/wgn_arqs_ext4/VIRT
+VAR_LIB_LIBVIRT_IMAGES=$BASE_PATH_HOME/libvirt-images
+ISO_PATH_HOME=$BASE_PATH_HOME/isos
