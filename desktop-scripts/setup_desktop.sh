@@ -68,20 +68,33 @@ echo .
 echo .
 echoout1 "GLOBAL VARIABLES"
 
-PROGSATIVOS_DIR_EXT4_PARTITION="/run/media/wgn/ext4/progsativos"
-PROGSATIVOS_DIR_BTRFS400G_PARTITION="/media/wgn/btrfs400G/PROGSATIVOS"
+
+PROGSATIVOS_DIR_EXT4_PARTITION_REDHAT_LIKE_DISTROS="/run/media/wgn/ext4/progsativos"
+PROGSATIVOS_DIR_EXT4_PARTITION_DEBIAN_LIKE_DISTROS="/media/wgn/ext4/progsativos"
+
+PROGSATIVOS_DIR_BTRFS400G_PARTITION_DEBIAN_LIKE_DISTROS="/media/wgn/btrfs400G/PROGSATIVOS"
+PROGSATIVOS_DIR_BTRFS400G_PARTITION_REDHAR_LIKE_DISTROS="/run/media/wgn/btrfs400G/PROGSATIVOS"
+
 
 #usando a particao ext4 como padrao, por enquanto
-PROGSATIVOS_DIR="$PROGSATIVOS_DIR_EXT4_PARTITION"
+PROGSATIVOS_DIR="$PROGSATIVOS_DIR_EXT4_PARTITION_REDHAT_LIKE_DISTROS"
 
 
+### change PROGSATIVOS DIRECTORY TO
+### THE PARTITION YOU USE OR CUSTOMIZE ID HERE
+### PROGSATIVOS DIRECTORY IS THE BASE DIRECTORY FOR ALL PROGSATIVOS FILES, INCLUDING IDES, RESEARCH, JAVA SDKS, AND OTHER TOOLS
+if [ "$OS_FAMILY" == "debian" ] || [ "$OS_ID" == "ubuntu" ]; then
+    PROGSATIVOS_DIR="$PROGSATIVOS_DIR_BTRFS400G_PARTITION_DEBIAN_LIKE_DISTROS"
+    _EMACS_EXECUTABLE="$PROGSATIVOS_DIR/ides/emacs/emacs-30.2/src/emacs/src/emacs"
+    _PROJECTS_SRCS_DESKTOP=/media/wgn/btrfs400G/Projects-Srcs-Desktop
+elif [ "$OS_FAMILY" == "fedora" ] || [ "$OS_FAMILY" == "rhel" ]; then
+    PROGSATIVOS_DIR="$PROGSATIVOS_DIR_BTRFS400G_PARTITION_REDHAT_LIKE_DISTROS"
+    _EMACS_EXECUTABLE="$PROGSATIVOS_DIR/ides/emacs/emacs-30.2/src/emacs/src/emacs-fed-41"
+    _PROJECTS_SRCS_DESKTOP=/run/media/wgn/btrfs400G/Projects-Srcs-Desktop
+else
+    echo "[ERROR] OS type not supported: $OS_ID"
+fi
 
-
-
-echoout2 "Progsativos directories"
-echoout "PROGSATIVOS_DIR_EXT4_PARTITION=$PROGSATIVOS_DIR_EXT4_PARTITION"
-echoout "PROGSATIVOS_DIR_BTRFS400G_PARTITION=$PROGSATIVOS_DIR_BTRFS400G_PARTITION"
-echoout "PROGSATIVOS_DIR=$PROGSATIVOS_DIR"
 
 echoout1 "GLOBAL VARIABLES: IDES"
 echoout2 "GLOBAL VARIABLES: compiled emacs executable depends on the OS type debian like or redhat like"
@@ -108,19 +121,16 @@ echo .
 #/run/media/wgn/ext4/progsativos/ides/emacs/emacs-30.2/src/emacs-fed-41 in redhat like
 
 if [ "$OS_FAMILY" == "debian" ] || [ "$OS_ID" == "ubuntu" ]; then
-    export _EMACS_EXECUTABLE="$PROGSATIVOS_DIR_BTRFS400G_PARTITION/ides/emacs/emacs-30.2/src/emacs"
+    export _EMACS_EXECUTABLE="$PROGSATIVOS_DIR_BTRFS400G_PARTITION_DEBIAN_LIKE_DISTROS/ides/emacs/emacs-30.2/src/emacs"
 elif [ "$OS_FAMILY" == "fedora" ] || [ "$OS_FAMILY" == "rhel" ]; then
-    export _EMACS_EXECUTABLE="$PROGSATIVOS_DIR_EXT4_PARTITION/ides/emacs/emacs-30.2/src/emacs-fed-41"
+    export _EMACS_EXECUTABLE="$PROGSATIVOS_DIR_BTRFS400G_PARTITION_REDHAR_LIKE_DISTROS/ides/emacs/emacs-30.2/src/emacs-fed-41"
 else
     echo "[ERROR] OS type not supported: $OS_ID"
 fi
 
-_FZL_EMACS_HOME="/media/wgn/btrfs400G//Projects-Srcs-Desktop/fzl-emacs" #fzl-emacs-start command
-echoout "_FZL_EMACS_HOME=\"/media/wgn/btrfs400G/Projects-Srcs-Desktop/fzl-emacs\"" #fzl-emacs-start command
+_FZL_EMACS_HOME="$_PROJECTS_SRCS_DESKTOP/fzl-emacs" #fzl-emacs-start command
 
-
-
-_ECLIPSE_JAVA_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-java-2025-06-R-linux-gtk-x86_64
+_JAVA_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-java-2025-06-R-linux-gtk-x86_64
 echoout "_ECLIPSE_JAVA_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-java-2025-06-R-linux-gtk-x86_64"
 
 _ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-modeling-2025-06-R-linux-gtk-x86_64
