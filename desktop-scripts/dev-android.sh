@@ -1,19 +1,22 @@
 #!/bin/bash
 
-# Android Studio and SDK Home Directories
-ANDROID_STUDIO_HOME="$PROGSATIVOS_DIR/android/android-studio"
-ANDROID_SDK_HOME="$PROGSATIVOS_DIR/Android/Sdk"
+# the scrcpy installation and path config is in the setup_desktop.sh
+function fzl-scrcpy-start(){
+    echo #(which scrcpy)
+    scrcpy
+}
+export -f fzl-scrcpy-start
 
-# Set Android-related environment variables
-export ANDROID_SDK_ROOT=$ANDROID_SDK_HOME
-export ANDROID_HOME=$ANDROID_SDK_HOME
-export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin:$ANDROID_SDK_ROOT/cmdline-tools/platform-tools
 
 # Start Android Studio
 function fzl-android-studio-start(){
+    echo "Starting Android Studio..."
+    echo "Android Studio path: $ANDROID_STUDIO_HOME"
+    echo "ls $ANDROID_STUDIO_HOME/bin/studio.sh: $(ls $ANDROID_STUDIO_HOME/bin/studio.sh)"
     bash $ANDROID_STUDIO_HOME/bin/studio.sh &
 }
 export -f fzl-android-studio-start
+
 
 # List available AVDs (Android Virtual Devices)
 function fzl-android-avd-list(){

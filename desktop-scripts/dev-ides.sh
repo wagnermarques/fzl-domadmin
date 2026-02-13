@@ -92,8 +92,7 @@ export -f fzl-theia-start
 
 #db front ends
 function fzl-squirrelsql-start(){
-  fzl-java-se
-  java -jar "$PROGSATIVOS_DIR/db-ides/squirrelsql-4.8.0-optional/squirrel-sql.jar"
+  java -jar "$_SQUIRREL_SQL_HOME/squirrel-sql.jar"
 }
 export -f fzl-squirrelsql-start
 

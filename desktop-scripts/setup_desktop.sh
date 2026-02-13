@@ -68,6 +68,15 @@ echo .
 echo .
 echoout1 "GLOBAL VARIABLES"
 
+# I've been using two different partitions to store my files, one is ext4 and other is btrfs,
+# so I need to declare the paths for both of them, and then use the one that is correct for the current machine
+# but the final purpose to this script runs it to define
+# PROGSATIVOS_DIR variable, which is the base directory for all progsativos files, including ides, research, java sdks, and other tools
+# Beside that, I also use ZorinOs and Fedora in different machines,
+# so I need to declare the paths for both of them, and then use the one that is correct for the current machine
+
+OS_FAMILY=$(fzl-os-utils-detect-os --family)
+OS_ID=$(fzl-os-utils-detect-os --id)
 
 PROGSATIVOS_DIR_EXT4_PARTITION_REDHAT_LIKE_DISTROS="/run/media/wgn/ext4/progsativos"
 PROGSATIVOS_DIR_EXT4_PARTITION_DEBIAN_LIKE_DISTROS="/media/wgn/ext4/progsativos"
@@ -75,60 +84,46 @@ PROGSATIVOS_DIR_EXT4_PARTITION_DEBIAN_LIKE_DISTROS="/media/wgn/ext4/progsativos"
 PROGSATIVOS_DIR_BTRFS400G_PARTITION_DEBIAN_LIKE_DISTROS="/media/wgn/btrfs400G/PROGSATIVOS"
 PROGSATIVOS_DIR_BTRFS400G_PARTITION_REDHAR_LIKE_DISTROS="/run/media/wgn/btrfs400G/PROGSATIVOS"
 
-
-#usando a particao ext4 como padrao, por enquanto
-PROGSATIVOS_DIR="$PROGSATIVOS_DIR_EXT4_PARTITION_REDHAT_LIKE_DISTROS"
-
-
-### change PROGSATIVOS DIRECTORY TO
-### THE PARTITION YOU USE OR CUSTOMIZE ID HERE
-### PROGSATIVOS DIRECTORY IS THE BASE DIRECTORY FOR ALL PROGSATIVOS FILES, INCLUDING IDES, RESEARCH, JAVA SDKS, AND OTHER TOOLS
 if [ "$OS_FAMILY" == "debian" ] || [ "$OS_ID" == "ubuntu" ]; then
     PROGSATIVOS_DIR="$PROGSATIVOS_DIR_BTRFS400G_PARTITION_DEBIAN_LIKE_DISTROS"
     _EMACS_EXECUTABLE="$PROGSATIVOS_DIR/ides/emacs/emacs-30.2/src/emacs/src/emacs"
     _PROJECTS_SRCS_DESKTOP=/media/wgn/btrfs400G/Projects-Srcs-Desktop
 elif [ "$OS_FAMILY" == "fedora" ] || [ "$OS_FAMILY" == "rhel" ]; then
-    PROGSATIVOS_DIR="$PROGSATIVOS_DIR_BTRFS400G_PARTITION_REDHAT_LIKE_DISTROS"
+     PROGSATIVOS_DIR="$PROGSATIVOS_DIR_BTRFS400G_PARTITION_REDHAT_LIKE_DISTROS"
     _EMACS_EXECUTABLE="$PROGSATIVOS_DIR/ides/emacs/emacs-30.2/src/emacs/src/emacs-fed-41"
     _PROJECTS_SRCS_DESKTOP=/run/media/wgn/btrfs400G/Projects-Srcs-Desktop
 else
     echo "[ERROR] OS type not supported: $OS_ID"
 fi
 
-
-echoout1 "GLOBAL VARIABLES: IDES"
-echoout2 "GLOBAL VARIABLES: compiled emacs executable depends on the OS type debian like or redhat like"
-# detect if os is debian like or redhat like
-
-OS_FAMILY=$(fzl-os-utils-detect-os --family)
-OS_ID=$(fzl-os-utils-detect-os --id)
-
-
-if [ "$OS_FAMILY" == "debian" ]; then
-    echoout "OS is debian like"
-elif [ "$OS_FAMILY" == "rhel" ]; then
-    echoout "OS is redhat like"
-else
-    echo "[ERROR] OS type not supported: $OS_FAMILY"
-fi
-echo OS_ID=$OS_ID
-echo OS_FAMILY=$OS_FAMILY
-echo .
-echo .
-# use
-# /media/wgn/btrfs400G/PROGSATIVOS/ides/emacs/emacs-30.2/src/emacs in debian like
-# and
-#/run/media/wgn/ext4/progsativos/ides/emacs/emacs-30.2/src/emacs-fed-41 in redhat like
-
-if [ "$OS_FAMILY" == "debian" ] || [ "$OS_ID" == "ubuntu" ]; then
-    export _EMACS_EXECUTABLE="$PROGSATIVOS_DIR_BTRFS400G_PARTITION_DEBIAN_LIKE_DISTROS/ides/emacs/emacs-30.2/src/emacs"
-elif [ "$OS_FAMILY" == "fedora" ] || [ "$OS_FAMILY" == "rhel" ]; then
-    export _EMACS_EXECUTABLE="$PROGSATIVOS_DIR_BTRFS400G_PARTITION_REDHAR_LIKE_DISTROS/ides/emacs/emacs-30.2/src/emacs-fed-41"
-else
-    echo "[ERROR] OS type not supported: $OS_ID"
-fi
-
+echoout1 "GLOBAL VARIABLES"
+echoout1 "GLOBAL VARIABLES => IDES"
+echoout2 "Emacs"
 _FZL_EMACS_HOME="$_PROJECTS_SRCS_DESKTOP/fzl-emacs" #fzl-emacs-start command
+
+
+echoout2 "Android platform (Android Studio, Android SDK and scrcpy)"
+ANDROID_STUDIO_HOME="$PROGSATIVOS_DIR/ides/android/android-studio-panda1-linux/android-studio"
+ANDROID_SDK_HOME="$PROGSATIVOS_DIR/android-sdk"
+export ANDROID_SDK_ROOT=$ANDROID_SDK_HOME
+export ANDROID_HOME=$ANDROID_SDK_HOME
+
+fzl-add-to-path $ANDROID_SDK_ROOT/platform-tools
+fzl-add-to-path $ANDROID_SDK_ROOT/tools
+fzl-add-to-path $ANDROID_SDK_ROOT/tools/bin
+fzl-add-to-path $ANDROID_SDK_ROOT/emulator
+fzl-add-to-path $ANDROID_SDK_ROOT/cmdline-tools/tools/bin
+
+#scrcpy
+#https://github.com/Genymobile/scrcpy/blob/master/doc/linux.mdhttps://github.com/Genymobile/scrcpy
+#sudo apt install ffmpeg libsdl2-2.0-0 adb wget \
+#                 gcc git pkg-config meson ninja-build libsdl2-dev \
+#                 libavcodec-dev libavdevice-dev libavformat-dev libavutil-dev \
+#                 libswresample-dev libusb-1.0-0 libusb-1.0-0-dev
+_SCRCPY_HOME=$PROGSATIVOS_DIR/android-tools/scrcpy-linux-x86_64-v3.3.4
+fzl-add-to-path $_SCRCPY_HOME
+echoout "_SCRCPY_HOME=$_SCRCPY_HOME"
+
 
 _JAVA_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-java-2025-06-R-linux-gtk-x86_64
 echoout "_ECLIPSE_JAVA_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-java-2025-06-R-linux-gtk-x86_64"
@@ -167,6 +162,8 @@ echoout "JAVA_17_TEMURIM_HOME=\"$PROGSATIVOS_DIR/javasdks/temurim/jdk-17.0.16+8\
 JAVA_11_TEMURIM_HOME="$PROGSATIVOS_DIR/javasdks/temurim/jdk-11.0.28+6"
 echoout "JAVA_11_TEMURIM_HOME=\"$PROGSATIVOS_DIR/javasdks/temurim/jdk-11.0.28+6\""
 
+export _SQUIRREL_SQL_HOME="$PROGSATIVOS_DIR/ides-dbs/SQuirreLSQL/squirrelsql-5.0.0-optional"
+echoout "_SQUIRREL_SQL_HOME=\"$PROGSATIVOS_DIR/ides-dbs/SQuirreLSQL/squirrelsql-5.0.0-optional\""
 
 echo "[INFO] Using Java JDK version: ${_defaults["javaJdkVersion"]}"
 if [ ${_defaults["javaJdkVersion"]} == "21" ]; then    
@@ -236,6 +233,9 @@ export -f fzl-battery-info-verbose
 
 ### Multimedia commands
 function fzl-ffmpeg-screencast-record(){
+    echo "Starting screen recording with ffmpeg..."
+    echo "Running command: bash $_THIS_PATH/multimedia/ffmpeg-screencast-record.sh"
+    echo "Output file will be saved in ~/GRAVACOES-ffmpeg/ with a timestamped name."
     bash $_THIS_PATH/multimedia/ffmpeg-screencast-record.sh
 }
 
