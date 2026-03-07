@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# fzl-emacs-start: Standalone script to start Emacs with specific configuration.
+# This script is designed to work independently of where it is called from.
+
+# 1. Determine the directory where this script resides
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# 2. Try to find the Emacs home directory relatively
+# Expected structure: 
+# .../Projects-Srcs-Desktop/fzl-domadmin/desktop-scripts/bin/fzl-emacs-start
+# .../Projects-Srcs-Desktop/fzl-emacs
+# So it's 3 levels up and then into fzl-emacs
+RELATIVE_EMACS_HOME="$( cd "$SCRIPT_DIR/../../.." && pwd )/fzl-emacs"
+
+# 3. Set EMACS_HOME, favoring environment variable IF IT EXISTS, 
+# then the relative path, then a hardcoded fallback.
+if [ -n "$_FZL_EMACS_HOME" ] && [ -d "$_FZL_EMACS_HOME" ]; then
+    EMACS_HOME="$_FZL_EMACS_HOME"
+elif [ -d "$RELATIVE_EMACS_HOME" ]; then
+    EMACS_HOME="$RELATIVE_EMACS_HOME"
+else
+    # Fallback to the known hardcoded path on this system
+    EMACS_HOME="/home/wgn/WORKING/Projects-Srcs/Projects-Srcs-Desktop/fzl-emacs"
+fi
+
+# 4. Set Emacs executable and handle build-tree paths
+EMACS_BIN="${_EMACS_EXECUTABLE:-"emacs"}"
+
+# If running from a build tree (detected by 'src/emacs' in path), set necessary environment variables
+if [[ "$EMACS_BIN" == */src/emacs ]]; then
+    EMACS_BUILD_DIR="$(dirname "$(dirname "$EMACS_BIN")")"
+    if [ -d "$EMACS_BUILD_DIR/lisp" ]; then
+        echo "Running Emacs from build tree: $EMACS_BUILD_DIR"
+        export EMACSLOADPATH="$EMACS_BUILD_DIR/lisp"
+        export EMACSDATA="$EMACS_BUILD_DIR/etc"
+        export EMACSDOC="$EMACS_BUILD_DIR/etc"
+        export EMACSPATH="$EMACS_BUILD_DIR/lib-src"
+    fi
+fi
+
+# 5. Validate path
+if [ ! -d "$EMACS_HOME" ]; then
+    echo "Error: Emacs home directory not found at $EMACS_HOME"
+    exit 1
+fi
+
+# 6. Change to the config directory and start Emacs
+# The config requires being in the directory to load init.el properly
+CONFIG_DIR="$EMACS_HOME/main/src/lispsite"
+
+if [ ! -d "$CONFIG_DIR" ]; then
+    echo "Error: Configuration directory not found at $CONFIG_DIR"
+    exit 1
+fi
+
+echo "Starting Emacs from $CONFIG_DIR..."
+cd "$CONFIG_DIR" || exit 1
+"$EMACS_BIN" -q -l init.el &

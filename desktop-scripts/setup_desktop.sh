@@ -68,39 +68,22 @@ echo .
 echo .
 echoout1 "GLOBAL VARIABLES"
 
-# I've been using two different partitions to store my files, one is ext4 and other is btrfs,
-# so I need to declare the paths for both of them, and then use the one that is correct for the current machine
-# but the final purpose to this script runs it to define
-# PROGSATIVOS_DIR variable, which is the base directory for all progsativos files, including ides, research, java sdks, and other tools
-# Beside that, I also use ZorinOs and Fedora in different machines,
-# so I need to declare the paths for both of them, and then use the one that is correct for the current machine
-
 OS_FAMILY=$(fzl-os-utils-detect-os --family)
 OS_ID=$(fzl-os-utils-detect-os --id)
 
-PROGSATIVOS_DIR_EXT4_PARTITION_REDHAT_LIKE_DISTROS="/run/media/wgn/ext4/progsativos"
-PROGSATIVOS_DIR_EXT4_PARTITION_DEBIAN_LIKE_DISTROS="/media/wgn/ext4/progsativos"
+#this is the base path where all my working tools stuffs lives
+export "_BASE_PATH=/home/wgn/WORKING"
+echoout "_BASE_PATH=$_BASE_PATH"
 
-PROGSATIVOS_DIR_BTRFS400G_PARTITION_DEBIAN_LIKE_DISTROS="/media/wgn/btrfs400G/PROGSATIVOS"
-PROGSATIVOS_DIR_BTRFS400G_PARTITION_REDHAR_LIKE_DISTROS="/run/media/wgn/btrfs400G/PROGSATIVOS"
+#my applications
+export _PROGSATIVOS_DIR="$_BASE_PATH/Progsativos"
 
-if [ "$OS_FAMILY" == "debian" ] || [ "$OS_ID" == "ubuntu" ]; then
-    PROGSATIVOS_DIR="$PROGSATIVOS_DIR_BTRFS400G_PARTITION_DEBIAN_LIKE_DISTROS"
-    _EMACS_EXECUTABLE="$PROGSATIVOS_DIR/ides/emacs/emacs-30.2/src/emacs/src/emacs"
-    _PROJECTS_SRCS_DESKTOP=/media/wgn/btrfs400G/Projects-Srcs-Desktop
-elif [ "$OS_FAMILY" == "fedora" ] || [ "$OS_FAMILY" == "rhel" ]; then
-     PROGSATIVOS_DIR="$PROGSATIVOS_DIR_BTRFS400G_PARTITION_REDHAT_LIKE_DISTROS"
-    _EMACS_EXECUTABLE="$PROGSATIVOS_DIR/ides/emacs/emacs-30.2/src/emacs/src/emacs-fed-41"
-    _PROJECTS_SRCS_DESKTOP=/run/media/wgn/btrfs400G/Projects-Srcs-Desktop
-else
-    echo "[ERROR] OS type not supported: $OS_ID"
-fi
-
-echoout1 "GLOBAL VARIABLES"
-echoout1 "GLOBAL VARIABLES => IDES"
-echoout2 "Emacs"
-_FZL_EMACS_HOME="$_PROJECTS_SRCS_DESKTOP/fzl-emacs" #fzl-emacs-start command
-
+#emacs
+#this is my emacs customization
+export _FZL_EMACS_HOME="$_BASE_PATH/Projects-Srcs/Projects-Srcs-Desktop/fzl-emacs"
+echoout "_FZL_EMACS_HOME=$_FZL_EMACS_HOME"
+export _EMACS_EXECUTABLE="$_PROGSATIVOS_DIR/ides/emacs-30.2/src/emacs"
+echoout "_EMACS_EXECUTABLE=$_EMACS_EXECUTABLE"
 
 echoout2 "Android platform (Android Studio, Android SDK and scrcpy)"
 ANDROID_STUDIO_HOME="$PROGSATIVOS_DIR/ides/android/android-studio-panda1-linux/android-studio"
@@ -113,6 +96,7 @@ fzl-add-to-path $ANDROID_SDK_ROOT/tools
 fzl-add-to-path $ANDROID_SDK_ROOT/tools/bin
 fzl-add-to-path $ANDROID_SDK_ROOT/emulator
 fzl-add-to-path $ANDROID_SDK_ROOT/cmdline-tools/tools/bin
+fzl-add-to-path "/home/wgn/WORKING/Progsativos/ides/emacs-30.2"
 
 #scrcpy
 #https://github.com/Genymobile/scrcpy/blob/master/doc/linux.mdhttps://github.com/Genymobile/scrcpy

@@ -1,15 +1,16 @@
 #!/bin/bash
 
-#$_FZL_EMACS_HOME is defined in setup_desktop.sh script
-
 function fzl-emacs-start(){
-    echo .
-    echo "Starting Emacs from.."
-    echo "_FZL_EMACS_HOME=$_FZL_EMACS_HOME"
-    echo "_EMACS_EXECUTABLE=$_EMACS_EXECUTABLE"
-    cd $_FZL_EMACS_HOME 
-    cd ./main/src/lispsite/ #needs entering in the directory to load the init.el file
-    $_EMACS_EXECUTABLE -q -l init.el &
+
+    # find the absolute path to the directory where the script itself is located,
+    local script_path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/bin/fzl-emacs-start"
+    
+    if [ -x "$script_path" ]; then
+        "$script_path" "$@"
+    else
+        echo "Error: Standalone script not found at $script_path"
+        return 1
+    fi
 }
 export -f fzl-emacs-start
 
