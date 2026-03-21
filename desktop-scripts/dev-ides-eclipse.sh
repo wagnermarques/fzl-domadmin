@@ -1,18 +1,5 @@
 #!/bin/bash
 
-#nao consegui fazer funcionar o muldisigner statndalone, mas com p2 funciona
-function fzl-umldesigner-start(){
-    source fzl-java-jdk-11
-    bash "$PROGSATIVOS_DIR/java-ides/umldesigner/umldesigner"
-}
-export -f fzl-umldesigner-start
-
-function fzl-eclipse-java-start(){
-    java -version
-    bash $_ECLIPSE_JAVA_HOME/eclipse &
-}
-export -f fzl-eclipse-java-start
-
 function fzl-sts-start(){
   "$PROGSATIVOS_DIR/java-ides/sts-4.22.0.RELEASE/SpringToolSuite4"
 }
@@ -28,5 +15,26 @@ function fzl-eclipse-modelling-start(){
 export -f fzl-eclipse-modelling-start
 
 
+function fzl-eclipse-jee-start(){
+    echo .
+    echo "[DEV-IDES-ECLIPSE] function fzl-eclipse-jee-start(){...."
+    echo "[DEV-IDES-ECLIPSE] Using Java JDK version: ${_defaults["javaJdkVersion"]}"
+    echo "[DEV-IDES-ECLIPSE] _ECLIPSE_JEE_HOME = $_ECLIPSE_JEE_HOME"    
+    "$_ECLIPSE_JEE_HOME/eclipse"
+}
+export -f fzl-eclipse-jee-start
 
+
+function fzl-eclipse-embedcpp-start(){
+    echo .
+    "$_ECLIPSE_EMBEDCPP_HOME/eclipse"
+}
+export -f fzl-eclipse-embedcpp-start
+
+
+function fzl-eclipse-php-start(){
+    echo .
+    "$_ECLIPSE_PHP_HOME/eclipse"
+}
+export -f fzl-eclipse-php-start
 

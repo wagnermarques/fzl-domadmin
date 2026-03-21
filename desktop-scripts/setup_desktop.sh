@@ -8,7 +8,7 @@ function echoout1() { echo " ############### " "$@" " ###############"; }
 function echoout2() { echo "----- " "$@"; }
 
 echo .
-echoout1 "Setup paths and source utils"
+echoout1 "Setup paths and source utils scripts"
 
 echoout2 "Config PATH environment variable"
 _THIS_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -82,12 +82,12 @@ export _PROGSATIVOS_DIR="$_BASE_PATH/Progsativos"
 #this is my emacs customization
 export _FZL_EMACS_HOME="$_BASE_PATH/Projects-Srcs/Projects-Srcs-Desktop/fzl-emacs"
 echoout "_FZL_EMACS_HOME=$_FZL_EMACS_HOME"
-export _EMACS_EXECUTABLE="$_PROGSATIVOS_DIR/ides/emacs-30.2/src/emacs"
-echoout "_EMACS_EXECUTABLE=$_EMACS_EXECUTABLE"
 
+echo .
 echoout2 "Android platform (Android Studio, Android SDK and scrcpy)"
 ANDROID_STUDIO_HOME="$PROGSATIVOS_DIR/ides/android/android-studio-panda1-linux/android-studio"
 ANDROID_SDK_HOME="$PROGSATIVOS_DIR/android-sdk"
+
 export ANDROID_SDK_ROOT=$ANDROID_SDK_HOME
 export ANDROID_HOME=$ANDROID_SDK_HOME
 
@@ -96,25 +96,39 @@ fzl-add-to-path $ANDROID_SDK_ROOT/tools
 fzl-add-to-path $ANDROID_SDK_ROOT/tools/bin
 fzl-add-to-path $ANDROID_SDK_ROOT/emulator
 fzl-add-to-path $ANDROID_SDK_ROOT/cmdline-tools/tools/bin
-fzl-add-to-path "/home/wgn/WORKING/Progsativos/ides/emacs-30.2"
 
+
+echo .
 #scrcpy
 #https://github.com/Genymobile/scrcpy/blob/master/doc/linux.mdhttps://github.com/Genymobile/scrcpy
 #sudo apt install ffmpeg libsdl2-2.0-0 adb wget \
 #                 gcc git pkg-config meson ninja-build libsdl2-dev \
 #                 libavcodec-dev libavdevice-dev libavformat-dev libavutil-dev \
 #                 libswresample-dev libusb-1.0-0 libusb-1.0-0-dev
-_SCRCPY_HOME=$PROGSATIVOS_DIR/android-tools/scrcpy-linux-x86_64-v3.3.4
-fzl-add-to-path $_SCRCPY_HOME
+_SCRCPY_HOME=$PROGSATIVOS_DIR/Android/scrcpy-linux-x86_64-v3.3.4
+#we will create fzl-scrcpy functions to work with scrcpy
+#because add it to path will conflict with android platfroms added before
+#fzl-add-to-path $_SCRCPY_HOME  
 echoout "_SCRCPY_HOME=$_SCRCPY_HOME"
 
 
-_JAVA_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-java-2025-06-R-linux-gtk-x86_64
-echoout "_ECLIPSE_JAVA_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-java-2025-06-R-linux-gtk-x86_64"
+echo .
+echo2 "Eclipse ides..."
+_ECLIPSE_JEE_HOME=$PROGSATIVOS_DIR/ides/eclipse/eclipse-jee-2026-03-R-linux-gtk-x86_64
+echoout "_ECLIPSE_JEE_HOME=$_ECLIPSE_JEE_HOME"
 
-_ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-modeling-2025-06-R-linux-gtk-x86_64
-echoout "_ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/ides/eclipse.org/eclipse-modeling-2025-06-R-linux-gtk-x86_64"
+_ECLIPSE_EMBEDCPP_HOME=$PROGSATIVOS_DIR/ides/eclipse/eclipse-embedcpp-2026-03-R-linux-gtk-x86_64
+echoout "_ECLIPSE_EMBEDCPP_HOME=$_ECLIPSE_EMBEDCPP_HOME"
 
+_ECLIPSE_PHP_HOME=$PROGSATIVOS_DIR/ides/eclipse/eclipse-php-2026-03-R-linux-gtk-x86_64
+echoout "_ECLIPSE_PHP_HOME=$_ECLIPSE_PHP_HOME"
+
+_ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/ides/eclipse/eclipse-modeling-2026-03-R-linux-gtk-x86_64
+echoout "_ECLIPSE_MODELLING_HOME=$_ECLIPSE_MODELLING_HOME"
+
+
+echo .
+echo2 "Jetbrains ides..."
 _INTELLIJ_HOME=$PROGSATIVOS_DIR/ides/idea-IU-252.23892.409
 echoout _INTELLIJ_HOME=$PROGSATIVOS_DIR/ides/idea-IU-252.23892.409
 
