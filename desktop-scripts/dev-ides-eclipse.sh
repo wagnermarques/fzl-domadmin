@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function fzl-sts-start(){
-  "$PROGSATIVOS_DIR/java-ides/sts-4.22.0.RELEASE/SpringToolSuite4"
+    "$PROGSATIVOS_DIR/java-ides/sts-4.22.0.RELEASE/SpringToolSuite4"
 }
 export -f fzl-sts-start
 

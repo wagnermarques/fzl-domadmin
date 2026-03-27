@@ -85,8 +85,8 @@ echoout "_FZL_EMACS_HOME=$_FZL_EMACS_HOME"
 
 echo .
 echoout2 "Android platform (Android Studio, Android SDK and scrcpy)"
-ANDROID_STUDIO_HOME="$PROGSATIVOS_DIR/ides/android/android-studio-panda1-linux/android-studio"
-ANDROID_SDK_HOME="$PROGSATIVOS_DIR/android-sdk"
+ANDROID_STUDIO_HOME="$_PROGSATIVOS_DIR/ides/android/android-studio-panda1-linux/android-studio"
+ANDROID_SDK_HOME="$_PROGSATIVOS_DIR/android-sdk"
 
 export ANDROID_SDK_ROOT=$ANDROID_SDK_HOME
 export ANDROID_HOME=$ANDROID_SDK_HOME
@@ -105,7 +105,7 @@ echo .
 #                 gcc git pkg-config meson ninja-build libsdl2-dev \
 #                 libavcodec-dev libavdevice-dev libavformat-dev libavutil-dev \
 #                 libswresample-dev libusb-1.0-0 libusb-1.0-0-dev
-_SCRCPY_HOME=$PROGSATIVOS_DIR/Android/scrcpy-linux-x86_64-v3.3.4
+_SCRCPY_HOME=$_PROGSATIVOS_DIR/Android/scrcpy-linux-x86_64-v3.3.4
 #we will create fzl-scrcpy functions to work with scrcpy
 #because add it to path will conflict with android platfroms added before
 #fzl-add-to-path $_SCRCPY_HOME  
@@ -113,24 +113,24 @@ echoout "_SCRCPY_HOME=$_SCRCPY_HOME"
 
 
 echo .
-echo2 "Eclipse ides..."
-_ECLIPSE_JEE_HOME=$PROGSATIVOS_DIR/ides/eclipse/eclipse-jee-2026-03-R-linux-gtk-x86_64
+echoout2 "Eclipse ides..."
+export _ECLIPSE_JEE_HOME=$_PROGSATIVOS_DIR/ides/eclipse/eclipse-jee-2026-03-R-linux-gtk-x86_64
 echoout "_ECLIPSE_JEE_HOME=$_ECLIPSE_JEE_HOME"
 
-_ECLIPSE_EMBEDCPP_HOME=$PROGSATIVOS_DIR/ides/eclipse/eclipse-embedcpp-2026-03-R-linux-gtk-x86_64
+export _ECLIPSE_EMBEDCPP_HOME=$_PROGSATIVOS_DIR/ides/eclipse/eclipse-embedcpp-2026-03-R-linux-gtk-x86_64
 echoout "_ECLIPSE_EMBEDCPP_HOME=$_ECLIPSE_EMBEDCPP_HOME"
 
-_ECLIPSE_PHP_HOME=$PROGSATIVOS_DIR/ides/eclipse/eclipse-php-2026-03-R-linux-gtk-x86_64
+export _ECLIPSE_PHP_HOME=$_PROGSATIVOS_DIR/ides/eclipse/eclipse-php-2026-03-R-linux-gtk-x86_64
 echoout "_ECLIPSE_PHP_HOME=$_ECLIPSE_PHP_HOME"
 
-_ECLIPSE_MODELLING_HOME=$PROGSATIVOS_DIR/ides/eclipse/eclipse-modeling-2026-03-R-linux-gtk-x86_64
+export _ECLIPSE_MODELLING_HOME=$_PROGSATIVOS_DIR/ides/eclipse/eclipse-modeling-2026-03-R-linux-gtk-x86_64
 echoout "_ECLIPSE_MODELLING_HOME=$_ECLIPSE_MODELLING_HOME"
 
 
 echo .
-echo2 "Jetbrains ides..."
-_INTELLIJ_HOME=$PROGSATIVOS_DIR/ides/idea-IU-252.23892.409
-echoout _INTELLIJ_HOME=$PROGSATIVOS_DIR/ides/idea-IU-252.23892.409
+echoout2 "Jetbrains ides..."
+export _INTELLIJ_HOME=$_PROGSATIVOS_DIR/ides/idea-IU-252.23892.409
+echoout _INTELLIJ_HOME=$_PROGSATIVOS_DIR/ides/idea-IU-252.23892.409
 
 #https://www.jetbrains.com/webstorm/download/download-thanks.html
 #https://www.jetbrains.com/clion/download/?section=linux
@@ -141,34 +141,39 @@ echoout _INTELLIJ_HOME=$PROGSATIVOS_DIR/ides/idea-IU-252.23892.409
 
 
 
+# app images depends of sudo dnf install libfuse2
+export _BRUNO_AppImage="$_PROGSATIVOS_DIR/tools/bruno_3.2.0_x86_64_linux.AppImage"
+function fzl-bruno-start(){ bash $_BRUNO_AppImage; } 
+export -f fzl-bruno-start
+echoout _BRUNO_AppImage=$_BRUNO_AppImage
 
-_BRUNO_AppImage="/run/media/wgn/ext4/progsativos/bruno/bruno_2.12.0_x86_64_linux.AppImage"
-echoout "_BRUNO_AppImage=\"/media/wgn/ext4/progsativos/bruno/bruno_2.12.0_x86_64_linux.AppImage\""
+ZOTERO_HOME="$_PROGSATIVOS_DIR/research/Zotero_linux-x86_64"
+echoout "ZOTERO_HOME=\"$_PROGSATIVOS_DIR/research/Zotero_linux-x86_64\""
 
-ZOTERO_HOME="$PROGSATIVOS_DIR/research/Zotero_linux-x86_64"
-echoout "ZOTERO_HOME=\"$PROGSATIVOS_DIR/research/Zotero_linux-x86_64\""
+TELEGRAM_HOME="$_PROGSATIVOS_DIR/Telegram"
+echoout "TELEGRAM_HOME=\"$_PROGSATIVOS_DIR/Telegram\""
 
-TELEGRAM_HOME="$PROGSATIVOS_DIR/Telegram"
-echoout "TELEGRAM_HOME=\"$PROGSATIVOS_DIR/Telegram\""
+JAVA_21_TEMURIM_HOME="$_PROGSATIVOS_DIR/javasdks/temurim/jdk-21.0.8+9"
+echoout "JAVA_21_TEMURIM_HOME=\"$_PROGSATIVOS_DIR/javasdks/temurim/jdk-21.0.8+9\""
 
-JAVA_21_TEMURIM_HOME="$PROGSATIVOS_DIR/javasdks/temurim/jdk-21.0.8+9"
-echoout "JAVA_21_TEMURIM_HOME=\"$PROGSATIVOS_DIR/javasdks/temurim/jdk-21.0.8+9\""
+JAVA_17_TEMURIM_HOME="$_PROGSATIVOS_DIR/javasdks/temurim/jdk-17.0.16+8"
+echoout "JAVA_17_TEMURIM_HOME=\"$_PROGSATIVOS_DIR/javasdks/temurim/jdk-17.0.16+8\""
 
-JAVA_17_TEMURIM_HOME="$PROGSATIVOS_DIR/javasdks/temurim/jdk-17.0.16+8"
-echoout "JAVA_17_TEMURIM_HOME=\"$PROGSATIVOS_DIR/javasdks/temurim/jdk-17.0.16+8\""
+JAVA_11_TEMURIM_HOME="$_PROGSATIVOS_DIR/javasdks/temurim/jdk-11.0.28+6"
+echoout "JAVA_11_TEMURIM_HOME=\"$_PROGSATIVOS_DIR/javasdks/temurim/jdk-11.0.28+6\""
 
-JAVA_11_TEMURIM_HOME="$PROGSATIVOS_DIR/javasdks/temurim/jdk-11.0.28+6"
-echoout "JAVA_11_TEMURIM_HOME=\"$PROGSATIVOS_DIR/javasdks/temurim/jdk-11.0.28+6\""
+export _SQUIRREL_SQL_HOME="$_PROGSATIVOS_DIR/ides-dbs/SQuirreLSQL/squirrelsql-5.0.0-optional"
+echoout "_SQUIRREL_SQL_HOME=\"$_PROGSATIVOS_DIR/ides-dbs/SQuirreLSQL/squirrelsql-5.0.0-optional\""
 
-export _SQUIRREL_SQL_HOME="$PROGSATIVOS_DIR/ides-dbs/SQuirreLSQL/squirrelsql-5.0.0-optional"
-echoout "_SQUIRREL_SQL_HOME=\"$PROGSATIVOS_DIR/ides-dbs/SQuirreLSQL/squirrelsql-5.0.0-optional\""
+export _DBEAVER_HOME="$_PROGSATIVOS_DIR/ides/ides-dbs/dbeaver"
+echoout "_DBEAVER_HOME=\"$_DBEAVER_HOME\""
 
 echo "[INFO] Using Java JDK version: ${_defaults["javaJdkVersion"]}"
-if [ ${_defaults["javaJdkVersion"]} == "21" ]; then    
+if [ "${_defaults[javaJdkVersion]}" == "21" ]; then    
     JAVA_HOME=$JAVA_21_TEMURIM_HOME
-elif [ ${_defaults["javaJdkVersion"]} == "17" ]; then
+elif [ "${_defaults[javaJdkVersion]}" == "17" ]; then
     JAVA_HOME=$JAVA_17_TEMURIM_HOME
-elif [ ${_defaults["javaJdkVersion"]} == "11" ]; then
+elif [ "${_defaults[javaJdkVersion]}" == "11" ]; then
     JAVA_HOME=$JAVA_11_TEMURIM_HOME
 else
     echo "[ERROR]: Java JDK version not supported: ${_defaults["javaJdkVersion"]}"     
@@ -240,12 +245,6 @@ function fzl-ffmpeg-screencast-record(){
 
 
 ### Functions to starts some apps
-function fzl-bruno-start(){
-    chmod +x $_BRUNO_AppImage
-    $_BRUNO_AppImage
-}
-export -f fzl-bruno-start
-
 function fzl-zotero-start(){
     "$ZOTERO_HOME/zotero" &
 }
@@ -272,6 +271,7 @@ export -f fzl-telegram-start
 
 #devs sdks
 export -f fzl-zotero-start
+export -f fzl-dbeaver-start
 
 #utils
 export -f fzl-show-env-vars

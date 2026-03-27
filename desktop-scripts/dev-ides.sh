@@ -97,6 +97,12 @@ function fzl-squirrelsql-start(){
 export -f fzl-squirrelsql-start
 
 
+function fzl-dbeaver-start(){
+    "$_DBEAVER_HOME/dbeaver" &
+}
+export -f fzl-dbeaver-start
+
+
 function fzl-scenebuilder-start(){
     "$PROGSATIVOS_DIR/java-ides/JavaFXSceneBuilder2.0/JavaFXSceneBuilder2.0"
 }
