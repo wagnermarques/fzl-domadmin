@@ -97,8 +97,8 @@ echoout "_FZL_EMACS_HOME=$_FZL_EMACS_HOME"
 
 echo .
 echoout2 "Android platform (Android Studio, Android SDK and scrcpy)"
-ANDROID_STUDIO_HOME="$_PROGSATIVOS_DIR/ides/android/android-studio-panda1-linux/android-studio"
-ANDROID_SDK_HOME="$_PROGSATIVOS_DIR/android-sdk"
+ANDROID_STUDIO_HOME="$_PROGSATIVOS_DIR/Android/android-studio-panda2-linux"
+ANDROID_SDK_HOME="$_PROGSATIVOS_DIR/Android/Sdk"
 
 export ANDROID_SDK_ROOT=$ANDROID_SDK_HOME
 export ANDROID_HOME=$ANDROID_SDK_HOME
