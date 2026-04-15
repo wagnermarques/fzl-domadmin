@@ -1,0 +1,50 @@
+* Project: fzl-domadmin
+
+** Overview
+This repository holds a collection of bash utilities and productivity
+scripts targeted at low-priced computers and teachers using Linux
+(Fedora-focused).
+
+It contains numerous convenience scripts, some small examples (hello_world.rs), and subprojects in BashProjects and other folders.
+
+
+** Languages & Tools
+- Primary: Bash (many scripts under repo root and BashProjects)
+- Other: Rust (hello_world.rs), Python (some tools under BashProjects), assorted shell utilities
+
+** Top-level structure (selected)
+- .git/, .vscode/
+- BashProjects/ - many small utilities and subfolders
+- desktop-scripts/
+- data-scripts/
+- fedora-*-box/ (several Fedora-focused boxes)
+- gui/
+- hello_world, hello_world.rs
+- tool-docker-replicate-env--moodle-une/
+
+** Notable files
+- README.md — usage notes, examples (e.g., minidlna / TV streaming steps) and a long feature list of scripts
+- LICENSE — Apache License 2.0
+- hello_world.rs — tiny Rust script demonstrating env
+- BashProjects/desktop-utils/taking-screenshots-py/requirements.txt — Pillow, scikit-image
+
+** Features (excerpt from README)
+Contains many fzl-* scripts including:
+- fzl-add-to-path, fzl-docker-* (prune, run mysql, portainer), fzl-libvirt-*, fzl-ambiente-dev-php-fpm-moodle-joomla-*, fzl-android-*, fzl-emacs*, fzl-ffmpeg-screencast-*, fzl-fonts-*, fzl-vscode-*, etc.
+(There are dozens more in the README; this is a utilities/metapackage of small admin scripts.)
+
+** License
+Repository uses Apache-2.0 (see LICENSE).
+
+** Initial observations
+- Repo is a personal collection of shell utilities and notes rather than a single packaged application.
+- README contains practical how-to steps (nmap, firewall-cmd, minidlna) and a long feature/script index.
+- Few formal project manifests (no package.json, pyproject.toml, Cargo.toml at repo root).
+
+** Recommendations / Next steps
+- Add a CONTRIBUTING.md if collaboration is desired.
+- Consider grouping scripts into subfolders with README and usage examples per area (e.g., docker, libvirt, android).
+- Add simple discoverability: an index script that lists available fzl-* scripts with short descriptions extracted from header comments.
+
+** Generated
+- Analysis generated on 2026-04-15T13:23:39Z by Copilot CLI

@@ -18,6 +18,19 @@ source "$_THIS_PATH/utils/path_utils.sh"
 source "$_THIS_PATH/utils/params_utils.sh"
 source "$_THIS_PATH/utils/os-utils.sh"
 
+# Load .env if present to override defaults (variables in KEY=VAL form)
+if [ -f "$_THIS_PATH/.env" ]; then
+  # export all variables from .env into environment temporarily
+  set -o allexport
+  source "$_THIS_PATH/.env"
+  set +o allexport
+fi
+
+# Provide sensible defaults when variables are not set
+: ${_BASE_PATH:="/home/wgn/WORKING"}
+: ${_PROGSATIVOS_DIR:="${_BASE_PATH}/Progsativos"}
+: ${_FZL_EMACS_HOME:="${_BASE_PATH}/Projects-Srcs/Projects-Srcs-Desktop/fzl-emacs"}
+
 fzl-add-to-path "$_THIS_PATH"/bin
 fzl-add-to-path "$_THIS_PATH"/lsp
 fzl-add-to-path "$_THIS_PATH"/multimedia
@@ -71,16 +84,15 @@ echoout1 "GLOBAL VARIABLES"
 OS_FAMILY=$(fzl-os-utils-detect-os --family)
 OS_ID=$(fzl-os-utils-detect-os --id)
 
-#this is the base path where all my working tools stuffs lives
-export "_BASE_PATH=/home/wgn/WORKING"
+# Base path: prefer value from .env or earlier defaults
+export _BASE_PATH="${_BASE_PATH:-/home/wgn/WORKING}"
 echoout "_BASE_PATH=$_BASE_PATH"
 
-#my applications
-export _PROGSATIVOS_DIR="$_BASE_PATH/Progsativos"
+# my applications
+export _PROGSATIVOS_DIR="${_PROGSATIVOS_DIR:-$_BASE_PATH/Progsativos}"
 
-#emacs
-#this is my emacs customization
-export _FZL_EMACS_HOME="$_BASE_PATH/Projects-Srcs/Projects-Srcs-Desktop/fzl-emacs"
+# emacs customization
+export _FZL_EMACS_HOME="${_FZL_EMACS_HOME:-$_BASE_PATH/Projects-Srcs/Projects-Srcs-Desktop/fzl-emacs}"
 echoout "_FZL_EMACS_HOME=$_FZL_EMACS_HOME"
 
 echo .
