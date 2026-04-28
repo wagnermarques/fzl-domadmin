@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # echo "[params_utils.sh] running..."
 # This script contains utility functions for managing parameters in a Bash script.
 # It provides functions to set, get, and check parameters, as well as to print all parameters.
