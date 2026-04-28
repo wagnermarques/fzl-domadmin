@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function fzl-sts-start(){
-    "$PROGSATIVOS_DIR/java-ides/sts-4.22.0.RELEASE/SpringToolSuite4"
+    "${_STS_HOME}/SpringToolSuite4"
 }
 export -f fzl-sts-start
 
@@ -37,4 +37,3 @@ function fzl-eclipse-php-start(){
     "$_ECLIPSE_PHP_HOME/eclipse"
 }
 export -f fzl-eclipse-php-start
-

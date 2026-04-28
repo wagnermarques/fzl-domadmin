@@ -20,6 +20,8 @@ function fzl-android-studio-start(){
     fi
     # common places under _PROGSATIVOS_DIR
     if [ -n "${_PROGSATIVOS_DIR:-}" ]; then
+        candidates+=("${_PROGSATIVOS_DIR}/android/studio/current/bin/studio.sh")
+        candidates+=("${_PROGSATIVOS_DIR}/android/studio/bin/studio.sh")
         candidates+=("${_PROGSATIVOS_DIR}/ides/android/android-studio/bin/studio.sh")
     fi
 
@@ -36,7 +38,7 @@ function fzl-android-studio-start(){
 
     # fallback: try to find any studio.sh inside typical locations (fast search)
     local found
-    found=$(find "${ANDROID_STUDIO_HOME:-$HOME}" "${_PROGSATIVOS_DIR:-/home/$USER/WORKING/Progsativos}" /opt -type f -name 'studio.sh' -perm /111 -maxdepth 5 2>/dev/null | head -n1 || true)
+    found=$(find "${ANDROID_STUDIO_HOME:-$HOME}" "${_PROGSATIVOS_DIR:-/home/$USER/WORKING/progsativos}" /opt -type f -name 'studio.sh' -perm /111 -maxdepth 5 2>/dev/null | head -n1 || true)
     if [ -n "$found" ] && [ -x "$found" ]; then
         echo "Found Android Studio via search: $found"
         nohup "$found" >/dev/null 2>&1 &
@@ -72,6 +74,7 @@ _android_tool(){
     [ -n "$ANDROID_SDK_ROOT" ] && candidates+=("$ANDROID_SDK_ROOT")
     [ -n "$ANDROID_HOME" ] && candidates+=("$ANDROID_HOME")
     [ -n "$ANDROID_SDK_HOME" ] && candidates+=("$ANDROID_SDK_HOME")
+    [ -n "${_PROGSATIVOS_DIR:-}" ] && candidates+=("${_PROGSATIVOS_DIR}/android/sdk/current" "${_PROGSATIVOS_DIR}/android/sdk" "${_PROGSATIVOS_DIR}/Android/Sdk")
     # common defaults
     candidates+=("$HOME/Android/Sdk" "/opt/android-sdk" "/usr/lib/android-sdk" "/usr/local/android-sdk")
 

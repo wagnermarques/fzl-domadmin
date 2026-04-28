@@ -2,6 +2,81 @@
 This is a bash scripts and utilities for productivity of low price
 computer machines and for teachers using linux, specially fedora.
 
+## standardized applications directory
+
+Desktop scripts now resolve applications from one standardized root:
+
+```text
+<_BASE_PATH>/progsativos/
+```
+
+You usually only need this in `desktop-scripts/.env`:
+
+```bash
+_BASE_PATH=/home/<user>/WORKING
+```
+
+`_PROGSATIVOS_DIR` is optional and only needed when your applications live outside the default `<_BASE_PATH>/progsativos`.
+
+The preferred layout is based on stable folders plus `current` symlinks:
+
+```text
+progsativos/
+  android/
+    studio/current
+    sdk/current
+    scrcpy/current
+  ide/
+    intellij/current
+    eclipse-jee/current
+    eclipse-embedcpp/current
+    eclipse-php/current
+    eclipse-modeling/current
+    vscode/current
+    sts/current
+    antigravity/current
+    theia/current
+  java/
+    temurin/21/current
+    temurin/17/current
+    temurin/11/current
+    oracle/21/current
+    oracle/17/current
+    oracle/8/current
+    build/
+      gradle/7.4.2/current
+      gradle/8.11.1/current
+      maven/current
+    servers/
+      tomcat9/current
+  javafx/
+    sdk/current
+    scenebuilder/current
+    scenebuilder-kit/current
+  nodejs/
+    current
+  db/
+    dbeaver/current
+    squirrelsql/current
+  communication/
+    telegram/current
+  research/
+    zotero/current
+  tools/
+    bruno/current
+  automation/
+    ansible/current/ansible.cfg
+```
+
+Example of how to update one application without changing the scripts:
+
+```bash
+cd /home/<user>/WORKING/progsativos/ide/intellij
+ln -sfn idea-IU-252.23892.409 current
+```
+
+The scripts still keep compatibility with the older `Progsativos` tree and older versioned folders while you migrate, but the long-term target is the lowercase `progsativos/` layout above.
+
 
 ## use cases
 ### Transmitir para Tv 
@@ -203,7 +278,6 @@ fzl-convert-audio--of-mp3                                            fzl-java-se
 fzl-convert-txt-2-pdf                                                fzl-java-setup--oracle-jdk-21                                        fzl-zotero-start
 fzl-convert-video-gif-anim                                           fzl-java-setup--oracle-jdk-8                                         
 fzl-convert-video-mp4                                                fzl-java-version-setup                                               
-
 
 
 

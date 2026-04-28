@@ -26,8 +26,17 @@ function fzl-screencast-start-ffmpeg(){
 export -f fzl-screencast-start-ffmpeg
 
 function fzl-ansible-config--setup-ansible.cfg(){
-    export ANSIBLE_CONFIG=$PROGSATIVOS_DIR/setup-progsativos-scripts/ansible.cfg    
+    local ansible_cfg
+
+    ansible_cfg="$(fzl-first-existing-path \
+        "$_PROGSATIVOS_DIR/automation/ansible/current/ansible.cfg" \
+        "$_PROGSATIVOS_DIR/setup-progsativos-scripts/ansible.cfg")"
+
+    if [ -n "$ansible_cfg" ]; then
+        export ANSIBLE_CONFIG="$ansible_cfg"
+    else
+        export ANSIBLE_CONFIG="$PROGSATIVOS_DIR/automation/ansible/current/ansible.cfg"
+    fi
 }
 export -f fzl-ansible-config--setup-ansible.cfg
-
 

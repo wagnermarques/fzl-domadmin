@@ -21,13 +21,13 @@ export -f fzl-java
 
 
 #JAVA JDK ON DESKTOP HOST
-_ORACLE_JAVA8_HOME="$PROGSATIVOS_DIR/java-jdks/jdk1.8.0_202/"
+_ORACLE_JAVA8_HOME="${_ORACLE_JAVA8_HOME:-$PROGSATIVOS_DIR/java/oracle/8/current}"
 _ORACLE_JAVA11_HOME=""
-_ORACLE_JAVA17_HOME="$PROGSATIVOS_DIR/java-jdks/jdk-17.0.3"
-_ORACLE_JAVA21_HOME="$PROGSATIVOS_DIR/java-jdks/jdk-21.0.1"
+_ORACLE_JAVA17_HOME="${_ORACLE_JAVA17_HOME:-$PROGSATIVOS_DIR/java/oracle/17/current}"
+_ORACLE_JAVA21_HOME="${_ORACLE_JAVA21_HOME:-$PROGSATIVOS_DIR/java/oracle/21/current}"
 _ORACLE_JAVA22_HOME=""
 
-JAVA_HOME=$_ORACLE_JAVA21_HOME
+JAVA_HOME="${JAVA_HOME:-$_ORACLE_JAVA21_HOME}"
 export PATH=$JAVA_HOME/bin:$PATH
 
 function _oracle_java_jdk_21_setup(){
@@ -92,9 +92,9 @@ export -f fzl-mvn
 
 
 #JAVA BUILD TOOLS ON DESKTOP HOST 
-export _GRADLE_HOME_7_4_2=$PROGSATIVOS_DIR/java-build/gradle-7.4.2
-export _GRADLE_HOME_8_11_1=$PROGSATIVOS_DIR/java-build/gradle-8.11.1
-export M2_HOME=$PROGSATIVOS_DIR/java-build/apache-maven-3.8.4
+export _GRADLE_HOME_7_4_2="${_GRADLE_HOME_7_4_2:-$PROGSATIVOS_DIR/java/build/gradle/7.4.2/current}"
+export _GRADLE_HOME_8_11_1="${_GRADLE_HOME_8_11_1:-$PROGSATIVOS_DIR/java/build/gradle/8.11.1/current}"
+export M2_HOME="${M2_HOME:-$PROGSATIVOS_DIR/java/build/maven/current}"
 
 
 function fzl-gradle-setup-7.4.2(){
@@ -115,7 +115,7 @@ export -f fzl-gradle-setup-8.11.1
 
 
 #JAVA SERVERS ON DESKTOP HOST
-_TOMCAT9_HOME="$PROGSATIVOS_DIR/java-servers/apache-tomcat-9.0.84"
+_TOMCAT9_HOME="${_TOMCAT9_HOME:-$PROGSATIVOS_DIR/java/servers/tomcat9/current}"
 
 function fzl-tomcat9-start(){
 	$_TOMCAT9_HOME/bin/startup.sh
@@ -125,4 +125,3 @@ function fzl-tomcat9-stop(){
 }
 export -f fzl-tomcat9-start	
 export -f fzl-tomcat9-stop
-
